@@ -1,0 +1,22 @@
+{% extends 'launch/base.html' %}
+{% block title %}
+   <title>Register</title>
+{% endblock %}
+
+{% block content %}
+   <div>
+      <form method="POST">
+         {% csrf_token %}
+         <fieldset>
+            <legend>Join today</legend>
+            {{ form.as_p }}
+         </fieldset>
+         <button type="submit">Sign Up</button>
+      </form>
+   </div>
+
+   <div>
+      <small>Already have an account? <a href="./login.html">Sign In</a></small>
+   </div>
+
+{% endblock %}
