@@ -12,7 +12,7 @@ def register(request):
          form.save()
          username = form.cleaned_data.get('username')
          messages.success(request, f'Account created for {username}!')
-         return redirect('launch:launch-home')
+         return redirect('launch:launch-login')
    else:
       form = RegisterUser()
    return render(request, 'launch/register.html', {'form': form})

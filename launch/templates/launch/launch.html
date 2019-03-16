@@ -6,5 +6,5 @@
 {% block content %}
    <h1>Launch Home</h1>
    <a href={% url 'launch:launch-register' %}><button type="submit">Register</button></a>
-   <a href="./login.html"><button type="submit">Log In</button></a>
+   <a href={% url 'launch:launch-login' %}><button type="submit">Log In</button></a>
 {% endblock %}

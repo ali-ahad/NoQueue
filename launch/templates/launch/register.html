@@ -10,13 +10,15 @@
          <fieldset>
             <legend>Join today</legend>
             {{ form.as_p }}
+            <input type="radio" name="user_type" value="restaurant">Restaurant Owner <br>
+            <input type="radio" name="user_type" value="customer">Customer <br>
          </fieldset>
          <button type="submit">Sign Up</button>
       </form>
    </div>
 
    <div>
-      <small>Already have an account? <a href="./login.html">Sign In</a></small>
+      <small>Already have an account? <a href={% url 'launch:launch-login' %}>Sign In</a></small>
    </div>
 
 {% endblock %}
