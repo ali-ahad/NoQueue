@@ -1,10 +1,11 @@
 {% extends 'launch/base.html' %}
 {% block title %}
-   <title>Log In</title>
+   <title>Restaurant Log In</title>
 {% endblock %}
 
 {% block content %}
    <div>
+      <h1>Login to restaurant</h1>
       <form method="POST">
          {% csrf_token %}
          <fieldset>
@@ -16,6 +17,6 @@
    </div>
 
    <div>
-      <small>Need an account? <a href={% url 'launch:launch-register' %}>Sign Up</a></small>
+      <small>Need an account? <a href={% url 'launch:launch-restaurant-register' %}>Sign Up</a></small>
    </div>
 {% endblock %}
