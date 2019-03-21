@@ -8,15 +8,39 @@
    {% if user.is_authenticated %}
    <h1>Welcome</h1> 
    <h3>{{user.get_username}}</h3>
+
    {% if user.is_owner %}
    <h4> Restaurant owner</h4>
+   <img width="100" height="100"src="{{user.owner_profile.image.url}}"></img>
    {%else%}
    <h4> Customer </h4>
+   <img width="100" height="100" src="{{user.customer_profile.image.url}}"></img>
    {% endif %}
    <a href={% url 'launch:logout' %}><button type="submit"> Logout </button></a>
    {% else %}
    <a href={% url 'launch:login' %}><button type="submit">Log in</button></a>
    <a href={% url 'launch:register' %}><button type="submit">Register</button></a>
    {% endif %}
+   {% if restaurants %}
+   {% for restaurant in restaurants %}
+   			<p>{{ restaurant.owner }}</p>
+      		<p>{{ restaurant.location }}</p>
+    	    <p>{{ restaurant.name }}</p>
+    		<p>{{ restaurant.cuisine }}</p>
+    		<img width="100" height="100" src="{{restaurant.image.url}}"></img>
+	{% endfor %}
+ 	{% endif %}
+
+   {% if myrestaurants %}
+   <h1>My Restaurants</h1>
+   {% for restaurant in myrestaurants %}
+       		<p>{{ restaurant.owner }}</p>
+      		<p>{{ restaurant.location }}</p>
+    	    <p>{{ restaurant.name }}</p>
+    		<p>{{ restaurant.cuisine }}</p>
+    		<img width="100" height="100" src="{{restaurant.image.url}}"></img>
+  	{% endfor %}
+  	<button> Add Restaurants </button>
+ 	{% endif %}
    
 {% endblock %}

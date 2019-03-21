@@ -2,17 +2,33 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserForm
 from .forms import OwnerProfileForm
-from .forms import CustomerProfileForm  
+from .forms import CustomerProfileForm
+from .models import Restaurant  
 
 def home(request):
+ 
    if request.user.is_authenticated:
+      username = request.user.username
       if request.user.is_owner:
-         return render(request, 'launch/launch.html')
+         context = {
+
+      'restaurants': Restaurant.objects.all(),
+      'myrestaurants': Restaurant.objects.filter(owner = request.user.id)
+         }
+
+         return render(request, 'launch/launch.html', context)
       else:
-         return render(request, 'launch/launch.html')
+         context = {
+      'restaurants': Restaurant.objects.all()   }
+
+
+         return render(request, 'launch/launch.html',context)
 
    else:   
-      return render(request, 'launch/launch.html')
+      context = {
+      'restaurants': Restaurant.objects.all()
+   }
+      return render(request, 'launch/launch.html',context)
 
 def register(request):
    return render(request, 'launch/register.html')
