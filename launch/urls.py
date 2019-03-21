@@ -6,11 +6,18 @@ app_name = "launch"
 
 urlpatterns = [
     path('', views.home, name='launch-home'),
-    path('restaurant-launch/', views.restaurant_launch, name='launch-restaurant'),
-    path('customer-launch/', views.customer_launch, name='launch-customer'),
-    path('restaurant-register/', views.register_restaurant, name='launch-restaurant-register'),
-    path('restaurant-login/', auth_views.LoginView.as_view(template_name='launch/restaurant-login.html'), name='launch-restaurant-login'),
-    path('customer-register/', views.register_customer, name='launch-customer-register'),
-    path('customer-login/', auth_views.LoginView.as_view(template_name='launch/customer-login.html'), name='launch-customer-login'),
+
+    path('register/', views.register, name='register'),
+    path('register-owner/', views.register_owner, name='register-owner'),
+    path('register-customer/', views.register_customer, name='register-customer'),
+
+
+    path('owner-register/', views.owner_profile_view, name='launch-register-owner'),
+    path('customer-register/', views.customer_profile_view, name='launch-register-customer'),
+    
+
+
+    path('login/', auth_views.LoginView.as_view(template_name='launch/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='launch/logout.html'), name='logout')
 ]
 

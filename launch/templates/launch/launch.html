@@ -5,6 +5,18 @@
 
 {% block content %}
    <h1>Launch Home</h1>
-   <a href={% url 'launch:launch-restaurant' %}><button type="submit">Restaurant Owner</button></a>
-   <a href={% url 'launch:launch-customer' %}><button type="submit">Customer</button></a>
+   {% if user.is_authenticated %}
+   <h1>Welcome</h1> 
+   <h3>{{user.get_username}}</h3>
+   {% if user.is_owner %}
+   <h4> Restaurant owner</h4>
+   {%else%}
+   <h4> Customer </h4>
+   {% endif %}
+   <a href={% url 'launch:logout' %}><button type="submit"> Logout </button></a>
+   {% else %}
+   <a href={% url 'launch:login' %}><button type="submit">Log in</button></a>
+   <a href={% url 'launch:register' %}><button type="submit">Register</button></a>
+   {% endif %}
+   
 {% endblock %}

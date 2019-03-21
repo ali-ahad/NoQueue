@@ -1,0 +1,23 @@
+{% extends 'launch/base.html' %}
+{% block title %}
+{% load crispy_forms_tags %}
+   <title>Restaurant Register</title>
+{% endblock %}
+
+{% block content %}
+   <div>
+      <h1>Register Customer </h1>
+      <form method="post">
+        {% csrf_token %}
+            {{ user_form | crispy }}
+            {{ profile_form | crispy }}
+ 
+         <button type="submit">Sign Up</button>
+</form>
+   </div>
+
+   <div>
+      <small>Already have an account? <a href={% url 'launch:login' %}>Sign In</a></small>
+   </div>
+
+{% endblock %}
