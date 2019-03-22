@@ -5,27 +5,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="profile-container">
-    
-   {% if user.is_owner %}
-    <img width="100" height="100"src="{{user.owner_profile.image.url}}"></img>
-    <h1>{{user.get_username}}</h1>
-    <h4> Restaurant owner</h4>
-   {%else%}
-    <img width="100" height="100" src="{{user.customer_profile.image.url}}"></img>
-    <h1>{{user.get_username}}</h1>
-    <h4>Customer</h4>
-  
-   {% endif %}
-   
-    </div>
-       <div class="update-container">
+   <div class="profile-container">  
+      {% if user.is_owner %}
+         <img width="100" height="100"src="{{user.owner_profile.image.url}}"></img>
+         <h1>{{user.get_username}}</h1>
+         <h4> Restaurant owner</h4>
+
+      {% else %}
+         <img width="100" height="100" src="{{user.customer_profile.image.url}}"></img>
+         <h1>{{user.get_username}}</h1>
+         <h4>Customer</h4>
+      {% endif %}
+   </div>
+
+   <div class="update-container">
       <h1>Update Information</h1>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ u_form | crispy }}
         {{ p_form | crispy }}
          <button type="submit">Update</button>
-  </form>
+      </form>
    </div>
 {% endblock %}

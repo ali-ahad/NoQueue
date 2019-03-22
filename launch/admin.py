@@ -4,7 +4,6 @@ from .models import User
 from .models import OwnerProfile
 from .models import CustomerProfile
 from .models import Restaurant
-# Register your models here.
 
 admin.site.register(User, UserAdmin)
 admin.site.register(OwnerProfile)

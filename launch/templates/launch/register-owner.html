@@ -8,12 +8,11 @@
    <div>
       <h1>Register to owner</h1>
       <form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-            {{ user_form | crispy }}
-            {{ profile_form | crispy }}
-
+         {% csrf_token %}
+         {{ user_form | crispy }}
+         {{ profile_form | crispy }}
          <button type="submit">Sign Up</button>
-</form>
+      </form>
    </div>
 
    <div>
