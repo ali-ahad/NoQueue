@@ -135,3 +135,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 AUTH_USER_MODEL = 'launch.User'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'launch:launch-home'
+
