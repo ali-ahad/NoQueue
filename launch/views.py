@@ -71,19 +71,16 @@ def home(request):
 
 # Navbar link functions
 def about(request):
-   return(request, 'launch/about.html')
+   return render(request, 'launch/about.html')
 
 def contact(request):
-   return(request, 'launch/contact-us.html')
-
-def elements(request):
-   return(request, 'launch/elements.html')
+   return render(request, 'launch/contact-us.html')
 
 def blog_home(request):
-   return(request, 'launch/blog-home.html')
+   return render(request, 'launch/blog-home.html')
 
 def blog_details(request):
-   return(request, 'launch/blog-details.html')
+   return render(request, 'launch/blog-details.html')
 
 # Function for user registration
 def register(request):

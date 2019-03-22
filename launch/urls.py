@@ -13,7 +13,6 @@ urlpatterns = [
     #Navbar limks
     path('about/', views.about, name='launch-about'), 
     path('contact/', views.contact, name='launch-contact'),
-    path('elements/', views.elements, name='launch-elements'),
     path('blog-home/', views.blog_home, name='launch-bloghome'),
     path('blog-details/', views.blog_details, name='launch-blogdetails'), 
 
