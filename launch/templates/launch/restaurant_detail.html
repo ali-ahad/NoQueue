@@ -1,0 +1,15 @@
+{% extends "launch/base.html"%}
+{% block title %}
+   <title>Launch-Home</title>
+{% endblock %}
+{% block content %}
+   <h1>Detail</h1>
+   <div class="restaurant-container">
+    <p><a href="#">{{ object.name }}</a></p>
+    <img width="100" height="100" src="{{object.image.url}}"></img>  	     
+    <p>{{ object.cuisine }}</p>
+     <p>{{ object.location }}</p>
+    <p>{{ object.owner }}</p> 
+    		
+  </div>
+{% endblock %}

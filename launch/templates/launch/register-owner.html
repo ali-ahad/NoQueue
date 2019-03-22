@@ -7,7 +7,7 @@
 {% block content %}
    <div>
       <h1>Register to owner</h1>
-      <form method="post">
+      <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
             {{ user_form | crispy }}
             {{ profile_form | crispy }}

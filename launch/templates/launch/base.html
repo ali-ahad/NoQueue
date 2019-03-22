@@ -5,6 +5,7 @@
    </head>
 
    <body> 
+      <a href="{% url 'launch:launch-home'%}"><button>Home</button></a>
       {% if messages %}
          {% for msg in messages %}
             {{ msg }}

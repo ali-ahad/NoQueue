@@ -6,18 +6,11 @@
 
 {% block content %}
    <div>
-      <h1>Register Customer </h1>
+      <h1>Create Restaurant </h1>
       <form method="post" enctype="multipart/form-data" >
         {% csrf_token %}
-            {{ user_form | crispy }}
-            {{ profile_form | crispy }}
- 
-         <button type="submit">Sign Up</button>
+            {{ form | crispy }} 
+         <button type="submit">Create</button>
 </form>
    </div>
-
-   <div>
-      <small>Already have an account? <a href={% url 'launch:login' %}>Sign In</a></small>
-   </div>
-
 {% endblock %}

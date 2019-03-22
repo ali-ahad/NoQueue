@@ -20,12 +20,28 @@ class UserForm(UserCreationForm):
 		fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
 
 class OwnerProfileForm(forms.ModelForm):
-    class Meta:
-        model = OwnerProfile
-        fields = ('location', 'bio')
+	images = forms.ImageField()
+	class Meta:
+		model = OwnerProfile
+		fields = ('location', 'bio', 'images')
         
 class CustomerProfileForm(forms.ModelForm):
-    class Meta:
-        model = CustomerProfile
-        fields = ('company_name', 'website')
-      
+	images = forms.ImageField()
+	class Meta:
+		model = CustomerProfile
+		fields = ('company_name', 'website', 'images')
+
+class UserUpdateForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ['email']
+
+class CustomerUpdateForm(forms.ModelForm):
+	class Meta:
+		model = CustomerProfile
+		fields = ('company_name', 'website', 'image')
+class OwnerUpdateForm(forms.ModelForm):
+	class Meta:
+		model = OwnerProfile
+		fields = ('location', 'bio', 'image')
+        

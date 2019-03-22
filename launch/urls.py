@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from .views import RestaurantDetailView, RestaurantCreateView
 
 app_name = "launch"
 
@@ -18,6 +19,12 @@ urlpatterns = [
 
 
     path('login/', auth_views.LoginView.as_view(template_name='launch/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='launch/logout.html'), name='logout')
-]
+    path('logout/', auth_views.LogoutView.as_view(template_name='launch/logout.html'), name='logout'),
+    path('profile/', views.show_profile, name='profile'),
+    #shows detail of restuarant using class based views
+    #creates restuarant using class based views
+    path('restaurant/<int:pk>/', RestaurantDetailView.as_view(), name='restaurant-detail'), 
+    path('restaurant/new/', RestaurantCreateView.as_view(), name='restaurant-create')
 
+
+]	
