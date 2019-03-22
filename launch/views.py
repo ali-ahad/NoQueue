@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.views.generic import DetailView, CreateView
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 from .forms import OwnerProfileForm
 from .forms import CustomerProfileForm
@@ -20,6 +23,32 @@ class RestaurantCreateView(CreateView):
    def form_valid(self,form):
       form.instance.owner = self.request.user
       return super().form_valid(form)
+
+class RestaurantUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+   login_url = '/login/'
+   model = Restaurant
+   fields = ['name', 'location', 'cuisine', 'image']
+
+   def form_valid(self,form):
+      form.instance.owner = self.request.user
+      return super().form_valid(form)
+
+   def test_func(self):
+      restaurant = self.get_object()
+      if self.request.user == restaurant.owner:
+         return True
+      else:
+         return False
+
+class RestaurantDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+   model = Restaurant
+   success_url = '/'
+   def test_func(self):
+      restaurant = self.get_object()
+      if self.request.user == restaurant.owner:
+         return True
+      else:
+         return False
 
 # Function that works when launch page is accessed
 def home(request):

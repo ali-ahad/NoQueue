@@ -1,0 +1,16 @@
+{% extends 'launch/base.html' %}
+{% block title %}
+   <title>Restaurant Register</title>
+{% endblock %}
+
+{% block content %}
+   <div>
+      <h1>Delete Restaurant</h1>
+      <form method="post" enctype="multipart/form-data" >
+         {% csrf_token %}
+         <h2> Are you sure you want to delete the restaurant {{ object.name}}?</h2>
+         <button type="submit">Yes, Delete</button>
+         <a href="{% url 'launch:restaurant-detail' object.id%}"><button type="submit">Cancel</button></a>
+      </form>
+   </div>
+{% endblock %}

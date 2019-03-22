@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from .views import RestaurantDetailView, RestaurantCreateView
+from .views import RestaurantDetailView, RestaurantCreateView, RestaurantUpdateView, RestaurantDeleteView
 
 app_name = "launch"
 
@@ -32,7 +32,9 @@ urlpatterns = [
     path('restaurant/<int:pk>/', RestaurantDetailView.as_view(), name='restaurant-detail'), 
 
     #creates restuarant using class based views
-    path('restaurant/new/', RestaurantCreateView.as_view(), name='restaurant-create')
+    path('restaurant/new/', RestaurantCreateView.as_view(), name='restaurant-create'),
 
+    path('restaurant/<int:pk>/update/', RestaurantUpdateView.as_view(), name='restaurant-update'),
+    path('restaurant/<int:pk>/delete/', RestaurantDeleteView.as_view(), name='restaurant-delete')
 
 ]	
