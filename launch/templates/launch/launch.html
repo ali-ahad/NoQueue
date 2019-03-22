@@ -1,11 +1,42 @@
-{% extends "launch/base.html"%}
+{% extends 'launch/base.html' %} 
+{% load static %}
+<!-- Page Title -->
 {% block title %}
-   <title>Launch-Home</title>
+    <title>No Queue</title>
+{% endblock  %}
+    <!-- Header Area Starts -->
+{% block header %}
+	<header class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="logo-area">
+                        <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="custom-navbar">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>  
+                    <div class="main-menu">
+                        <ul>
+                            <li class="active"><a href="index.html">home</a></li>
+                            <li><a href="about.html">about</a></li>
+                            <li><a href="contact-us.html">contact</a></li>
+                            <li><a href="elements.html">Elements</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 {% endblock %}
+    <!-- Header Area End -->
 
 {% block content %}
-   <h1>Launch Home</h1>
-   {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
         <h1>Welcome</h1> 
         <h3>{{user.get_username}}</h3>
         <a href={% url 'launch:logout' %}><button type="submit"> Logout </button></a>
@@ -28,7 +59,7 @@
         {% endif %}
         <a href={% url 'launch:restaurant-create' %}><button type="submit"> Add restaurant </button></a>
 
-    {% else %}
+        {% else %}
         <h4> Customer </h4>
         <img width="100" height="100" src="{{user.customer_profile.image.url}}"></img>
         <h1>Restaurants</h1>
@@ -40,12 +71,31 @@
           <p>{{ restaurant.cuisine }}</p>
           <p>{{ restaurant.location }}</p>         
         </div>
-        {% endfor %}
-        
+        {% endfor %}   
     {% endif %}
 
-  {% else %}
-    <a href={% url 'launch:login' %}><button type="submit">Log in</button></a>
-    <a href={% url 'launch:register' %}><button type="submit">Register</button></a>
-  {% endif %}
+    {% else %}
+    <!-- Banner Area Starts -->
+    <section class="banner-area text-center">
+        <div class="container">
+			<div class="background">
+                <div class="layer"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Welcome to  <span class="prime-color">NoQueue!</span><br>  
+                    <h6 style="">Never Wait in Line again!</h6>
+				    </br><a href={% url 'launch:login' %} class="genric-btn primary circle" >Log In</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				    <a href={% url 'launch:register' %} class="genric-btn primary circle">Register</a>
+				    </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!-- Banner Area End -->
 {% endblock %}
+
+
+    
+ 

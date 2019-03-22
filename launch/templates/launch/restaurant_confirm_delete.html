@@ -1,9 +1,5 @@
 {% extends 'launch/base.html' %}
 {% block title %}
-<<<<<<< HEAD
-=======
-
->>>>>>> 88a551558f9b90abbddffe5dec045a6938d43e16
    <title>Restaurant Register</title>
 {% endblock %}
 
@@ -11,23 +7,10 @@
    <div>
       <h1>Delete Restaurant</h1>
       <form method="post" enctype="multipart/form-data" >
-<<<<<<< HEAD
          {% csrf_token %}
          <h2> Are you sure you want to delete the restaurant {{ object.name}}?</h2>
          <button type="submit">Yes, Delete</button>
          <a href="{% url 'launch:restaurant-detail' object.id%}"><button type="submit">Cancel</button></a>
       </form>
-=======
-        {% csrf_token %}
-           <h2> Are you sure you want to delete the restaurant {{ object.name}}?</h2>
-         <button type="submit">Yes, Delete</button>
-         <a href="{% url 'launch:restaurant-detail' object.id%}">
-         	<button type="submit">Cancel</button>
-         </a>
-         
-
-
-</form>
->>>>>>> 88a551558f9b90abbddffe5dec045a6938d43e16
    </div>
 {% endblock %}
