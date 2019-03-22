@@ -69,6 +69,22 @@ def home(request):
    else:   
       return render(request, 'launch/launch.html')
 
+# Navbar link functions
+def about(request):
+   return(request, 'launch/about.html')
+
+def contact(request):
+   return(request, 'launch/contact-us.html')
+
+def elements(request):
+   return(request, 'launch/elements.html')
+
+def blog_home(request):
+   return(request, 'launch/blog-home.html')
+
+def blog_details(request):
+   return(request, 'launch/blog-details.html')
+
 # Function for user registration
 def register(request):
    return render(request, 'launch/register.html')

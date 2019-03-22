@@ -28,30 +28,9 @@
       {% block content %} 
       {% endblock %}
 
-         <div class="footer-copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-7 col-md-6">
-                        <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made  by Group 3
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
-                    </div>
-                    <div class="col-lg-5 col-md-6">
-                        <div class="social-icons">
-                            <ul>
-                                <li class="no-margin">Follow Us</li>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </footer>
+			{% block footer %}
+			{% endblock %}
+
 
       <!-- Javascript -->
       <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
