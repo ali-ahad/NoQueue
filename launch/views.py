@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from .forms import UserForm
@@ -11,7 +9,7 @@ from .forms import UserUpdateForm
 from .forms import OwnerProfileForm
 from .forms import CustomerUpdateForm
 from .forms import OwnerUpdateForm
-from .models import Restaurant  
+from .models import Restaurant 
 
 class RestaurantDetailView(DetailView):
    model = Restaurant
