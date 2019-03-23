@@ -10,6 +10,12 @@ urlpatterns = [
     # Initial page when app launches
     path('', views.home, name='launch-home'),
 
+    #Navbar limks
+    path('about/', views.about, name='launch-about'), 
+    path('contact/', views.contact, name='launch-contact'),
+    path('blog-home/', views.blog_home, name='launch-bloghome'),
+    path('blog-details/', views.blog_details, name='launch-blogdetails'), 
+
     # Page that loads when the user registers
     path('register/', views.register, name='register'),
 
