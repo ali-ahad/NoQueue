@@ -1,17 +1,34 @@
-For Back End:
+For Back End: (The back end is still changing and not yet finished)
+1) Navigate to the folder and run the following command on the terminal: "python manage.py runserver"
+2) Use the local host written at the end and navigate to the launch page.
+3) Here you can choose if you want to login or register
+4) If you choose to register, you can either register as an owner or a customer.
+5) Once registered you can now log in.
+6) If logged in as customer:
+		a) The home page shows the photo of the customer with a list of all restaurants.
+		b) The customer can select one of the restaurant to view its menu.
+7) If logged in as a restaurant owner:
+		a) The home page shows the photo of the restaurant owner with a list of all the restaurants he/she owns.
+		b) There's an option to add/update a restaurant.
+
+Further things to do:
+1) For the customer:
+		a) Add the functionality of selecting a restaurant and choose dishes from its menu.
+		b) Provide add to cart, update cart, view total bill and payment functionalities.
+		c) Provide recommendations based on order history
+		d) Add functionality to change his/her own information.
+
+2) For the restaurant:
+		a) Add functionalities to delete the restaurant
+		b) Add functionality to add menu to each restaurant
+		C) Add functionality to provide estimate time before each order is finished
+		d) Add functionality to accept or reject a customer's order
+		e) Add functionality to change his/her own information.
+
+Note: The backend is not fully integrated with the backend and therefore wont be able to provide the best user experience.
 
 
-
-
-
-
-
-
-
-
-
-
-For Front End: (The front end is still changing and is not yet completely finished)
+For Front End: (The front end is still changing and not yet finished)
 1) Navigate to Front End folder
 2) Run index.html
 3) Pages we have built:	
