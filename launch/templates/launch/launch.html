@@ -42,9 +42,7 @@
 
         {% if user.is_owner %}
           <img width="100" height="100"src="{{user.owner_profile.image.url}}"></img>
-          <h4> Restaurant owner</h4>
-
-          {% if myrestaurants %}
+          <h3> Restaurant owner</h3>
             <h1>My Restaurants</h1>
             {% for restaurant in myrestaurants %}
               <div class="restaurant-container">
@@ -54,11 +52,9 @@
                 <p>{{ restaurant.location }}</p>        
               </div>
             {% endfor %}
-
-        {% endif %}
         <a href={% url 'launch:restaurant-create' %}><button type="submit"> Add restaurant </button></a>
 
-        {% else %}
+         {% else %}
         <h4> Customer </h4>
         <img width="100" height="100" src="{{user.customer_profile.image.url}}"></img>
         <h1>Restaurants</h1>

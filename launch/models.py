@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
@@ -15,29 +16,32 @@ class OwnerProfile(models.Model):
 
 	def __str__(self):
 		return self.user.username
-  
-# Class for dealing with customer
-class CustomerProfile(models.Model):
-  	user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='customer_profile')
-  	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
-  	def __str__ (self):
-  		return self.user.username
-
-# Class for dealing with restaurants
-class Restaurant(models.Model):
+	
+class Item(models.Model):
 	name = models.CharField(max_length=100)
-	location = models.CharField(max_length=300)
+	price = models.DecimalField(max_digits=6,decimal_places=2, default =0.00)
 	cuisine = models.CharField(max_length=50)
-	owner = models.ForeignKey(User, on_delete = models.CASCADE) #gets user from user tables. 
+	restaurant = models.ForeignKey('Restaurant', on_delete = models.CASCADE) #gets user from user tables. 
 	image = models.ImageField(default='rest_default.jpg', upload_to='restaurant_pics')
 
 	def __str__(self):
 		return self.name
-
 	def get_absolute_url(self):
-		return reverse('launch:restaurant-detail', kwargs={'pk':self.pk})
-	
+		return reverse('launch:item-detail', kwargs={'rk':self.restaurant.pk, 'pk':self.pk})
+
+
+# Class for dealing with customer
+class CustomerProfile(models.Model):
+  	user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='customer_profile')
+  	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+  	cart = models.ManyToManyField(Item, blank = True)
+
+  	def __str__ (self):
+  		return self.user.username
+
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
 	print('****', created)
@@ -58,3 +62,46 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 
+
+# Class for dealing with restaurants
+class Restaurant(models.Model):
+	name = models.CharField(max_length=100)
+	location = models.CharField(max_length=300)
+	cuisine = models.CharField(max_length=50)
+	owner = models.ForeignKey(User, on_delete = models.CASCADE) #gets user from user tables. 
+	image = models.ImageField(default='rest_default.jpg', upload_to='restaurant_pics')
+
+	def __str__(self):
+		return self.name
+	def get_absolute_url(self):
+		return reverse('launch:restaurant-detail', kwargs={'pk':self.pk})
+	
+	
+
+class OrderItem(models.Model):
+    product = models.OneToOneField(Item, on_delete=models.SET_NULL, null=True)
+    quantity = models.IntegerField(default = 1)
+    
+    def __str__(self):
+        return self.product.name
+
+
+
+class Order(models.Model):
+    ref_code = models.CharField(max_length=15)
+    owner = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True)
+    is_ordered = models.BooleanField(default=False)
+    items = models.ManyToManyField(OrderItem)
+    date_ordered = models.DateTimeField(auto_now=True)
+
+    def get_cart_items(self):
+        return self.items.all()
+
+    def get_cart_total(self):
+    	sum = 0
+    	for item in self.items.all():
+    		sum = sum + (int(item.product.price) * int(item.quantity))
+    	return sum
+
+    def __str__(self):
+        return '{0} - {1}'.format(self.owner, self.ref_code)

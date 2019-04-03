@@ -1,0 +1,47 @@
+{% extends "launch/base.html"%}
+{% block title %}
+   <title>Launch-Home</title>
+{% endblock %}
+{% block content %}
+<h1> MENU </h1>
+<div class="container-menu">
+  {% if item_list %}
+  <ul>
+    {% if user.is_authenticated %}
+      {% if user.is_owner %}
+        {% for item in item_list %}
+      <li>
+        <div class="container-item">
+        <a href="{% url 'launch:item-detail' item.restaurant.pk item.pk%}"><p >{{ item.name }}</p></a>
+        <p>{{ item.price }}</p> 
+        <p>{{item.restaurant}}</p>
+        <div class="container-item-warning"></div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+    {% else %}
+    <ul>
+    {% for item in item_list %}
+    
+      <li>
+        <div class="container-item">
+        <a href="{% url 'launch:item-detail' item.restaurant.pk item.pk%}"><p >{{ item.name }}</p></a>
+        <p>{{ item.price }}</p> 
+        <p>{{item.restaurant}}</p>
+        <div class="container-item-warning"></div>
+        <a href ="{% url 'launch:add-to-cart' item.restaurant.pk item.pk%}"><button> Add to cart </button></a>
+       
+        </div>
+      </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{%endif%}
+  {% else %}
+    <p>Menu is empty.</p>
+  {% endif %}    
+  </div>   
+   <a href="{% url 'launch:item-create' view.kwargs.pk%}"><button> Add item </button></a>
+
+{% endblock %}

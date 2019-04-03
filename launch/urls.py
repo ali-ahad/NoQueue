@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from .views import RestaurantDetailView, RestaurantCreateView, RestaurantUpdateView, RestaurantDeleteView
+from .views import RestaurantDetailView, MenuDetailView,ItemCreateView,ItemDetailView,ItemUpdateView, ItemDeleteView, RestaurantCreateView, RestaurantUpdateView, RestaurantDeleteView
 
 app_name = "launch"
 
@@ -32,7 +32,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='launch/logout.html'), name='logout'),
 
     # Path that shows the profile for customers or owner
-    path('profile/', views.show_profile, name='profile'),
+    #path('profile/', views.show_profile, name='profile'),
 
     #shows detail of restuarant using class based views
     path('restaurant/<int:pk>/', RestaurantDetailView.as_view(), name='restaurant-detail'), 
@@ -41,6 +41,27 @@ urlpatterns = [
     path('restaurant/new/', RestaurantCreateView.as_view(), name='restaurant-create'),
 
     path('restaurant/<int:pk>/update/', RestaurantUpdateView.as_view(), name='restaurant-update'),
-    path('restaurant/<int:pk>/delete/', RestaurantDeleteView.as_view(), name='restaurant-delete')
+    path('restaurant/<int:pk>/delete/', RestaurantDeleteView.as_view(), name='restaurant-delete'),
+
+    path('restaurant/<int:pk>/menu/', MenuDetailView.as_view(), name='restaurant-menu'),
+
+
+    path('restaurant/<int:pk>/menu/add', ItemCreateView.as_view(), name='item-create'),
+    path('restaurant/<int:rk>/menu/<int:pk>', ItemDetailView.as_view(), name='item-detail'), 
+    path('restaurant/<int:rk>/menu/<int:pk>/update/', ItemUpdateView.as_view(), name='item-update'),
+    path('restaurant/<int:rk>/menu/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
+    path('profile/', views.my_profile, name='my_profile'),
+    
+ 
+    path('restaurant/<int:rk>/menu/<int:pk>/addtocart/', views.add_to_cart, name='add-to-cart'),   
+    path('order-summary/', views.order_details, name="order-summary"),
+    path('item/<int:pk>/deletefromcart', views.delete_from_cart, name='delete-item')
+    
+
+    
+
+
+
+
 
 ]	
