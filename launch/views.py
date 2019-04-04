@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect,reverse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
+from django.conf import settings
 from .forms import UserForm, CustomerProfile
 from .forms import OwnerProfileForm
 from .forms import CustomerProfileForm
@@ -9,11 +10,25 @@ from .forms import UserUpdateForm
 from .forms import CustomerUpdateForm
 from .forms import OwnerUpdateForm
 from .models import Restaurant, Item 
-from .models import Order, OrderItem
+from .models import Order, OrderItem, Transaction
 import random
 import string
 import datetime
+import braintree
+import stripe
 from datetime import date
+
+gateway = braintree.BraintreeGateway(
+    braintree.Configuration(
+        environment=settings.BT_ENVIRONMENT,
+        merchant_id=settings.BT_MERCHANT_ID,
+        public_key=settings.BT_PUBLIC_KEY,
+        private_key=settings.BT_PRIVATE_KEY
+    )
+)
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 class RestaurantDetailView(DetailView):
    model = Restaurant
 
@@ -107,7 +122,14 @@ def generate_order_id():
     rand_str = "".join([random.choice(string.digits) for count in range(3)])
     return date_str + rand_str
 
+def generate_client_token():
+    return gateway.client_token.generate()
 
+def transact(options):
+    return gateway.transaction.sale(options)
+
+def find_transaction(id):
+    return gateway.transaction.find(id)
 
 
 def add_to_cart(request, **kwargs):
@@ -154,10 +176,6 @@ def get_user_pending_order(request):
         return order[0]
     return 0
 
-
-
-
-
 def delete_from_cart(request, item_id):
     item_to_delete = OrderItem.objects.filter(pk=item_id)
     if item_to_delete.exists():
@@ -165,16 +183,12 @@ def delete_from_cart(request, item_id):
         messages.info(request, "Item has been deleted")
     return redirect(reverse('launch:order_summary'))
 
-
-
 def order_details(request, **kwargs):
     existing_order = get_user_pending_order(request)
     context = {
         'order': existing_order
     }
     return render(request, 'launch/order_summary.html', context)
-
-
 
 
 def update_transaction_records(request, token):
@@ -193,7 +207,7 @@ def update_transaction_records(request, token):
     order_items.update(is_ordered=True, date_ordered=datetime.datetime.now())
 
     # Add products to user profile
-    user_profile = get_object_or_404(Profile, user=request.user)
+    user_profile = get_object_or_404(CustomerProfile, user=request.user)
     # get the products from the items
     order_products = [item.product for item in order_items]
     user_profile.ebooks.add(*order_products)
@@ -214,6 +228,56 @@ def update_transaction_records(request, token):
     # look at tutorial on how to send emails with sendgrid
     messages.info(request, "Thank you! Your purchase was successful!")
     return redirect(reverse('accounts:my_profile'))
+
+def checkout(request, **kwargs):
+   client_token = generate_client_token()
+   existing_order = get_user_pending_order(request)
+   publishKey = settings.STRIPE_PUBLISHABLE_KEY
+   if request.method == 'POST':
+      token = request.POST.get('stripeToken', False)
+      if token:
+         try:
+            charge = stripe.Charge.create(
+               amount=100*existing_order.get_cart_total(),
+               currency='usd',
+               description='Example charge',
+               source=token,
+            )
+
+            return redirect(reverse('launch:item-update', 
+                     kwargs={
+                        'token': token
+                     }))
+         except stripe.error.CardError as e:
+            messages.info(request, e)
+
+      else:
+         result = transact({
+            'amount': existing_order.get_cart_total(),
+            'payment_method_nonce': request.POST['payment_method_nonce'],
+            'options': {
+               "submit_for_settlement": True
+            }
+         })
+
+         if result.is_success or result.transaction:
+            return redirect(reverse('launch:item-update', 
+                     kwargs={
+                        'token': result.transaction.id
+                     }))
+
+         else: 
+            for x in result.errors.deep_errors:
+               messages.info(request, x)
+            return redirect(reverse('launch:item-update'))
+
+   context = {
+      'order': existing_order,
+      'client_token': client_token,
+      'STRIPE_PUBLISHABLE_KEY': publishKey
+   }
+
+   return render(request, 'launch/checkout.html', context)
 
 
 def success(request, **kwargs):

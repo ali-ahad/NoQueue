@@ -52,7 +52,7 @@
         </td>
         <td colspan=2>
           {% if order.get_cart_items %}
-            Proceed To Checkout</a>
+            <a href={% url 'launch:checkout' %} class="pull-right btn btn-primary" >Proceed To Checkout</a></a>
           {% endif %}
         </td>
       </tr>
