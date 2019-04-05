@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect,reverse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
+from django.core.paginator import Paginator
 from django.conf import settings
+from django.db.models import Q
 from .forms import UserForm, CustomerProfile
 from .forms import OwnerProfileForm
 from .forms import CustomerProfileForm
@@ -18,14 +20,6 @@ import braintree
 import stripe
 from datetime import date
 
-gateway = braintree.BraintreeGateway(
-    braintree.Configuration(
-        environment=settings.BT_ENVIRONMENT,
-        merchant_id=settings.BT_MERCHANT_ID,
-        public_key=settings.BT_PUBLIC_KEY,
-        private_key=settings.BT_PRIVATE_KEY
-    )
-)
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -122,16 +116,6 @@ def generate_order_id():
     rand_str = "".join([random.choice(string.digits) for count in range(3)])
     return date_str + rand_str
 
-def generate_client_token():
-    return gateway.client_token.generate()
-
-def transact(options):
-    return gateway.transaction.sale(options)
-
-def find_transaction(id):
-    return gateway.transaction.find(id)
-
-
 def add_to_cart(request, **kwargs):
     # get the user profile
     user_profile = get_object_or_404(CustomerProfile, user=request.user)
@@ -227,16 +211,15 @@ def update_transaction_records(request, token):
     # send an email to the customer
     # look at tutorial on how to send emails with sendgrid
     messages.info(request, "Thank you! Your purchase was successful!")
-    return redirect(reverse('accounts:my_profile'))
+    return redirect(reverse('launch:launch-home'))
 
 def checkout(request, **kwargs):
-   client_token = generate_client_token()
    existing_order = get_user_pending_order(request)
    publishKey = settings.STRIPE_PUBLISHABLE_KEY
    if request.method == 'POST':
-      token = request.POST.get('stripeToken', False)
-      if token:
          try:
+            token = request.POST['stripeToken']
+
             charge = stripe.Charge.create(
                amount=100*existing_order.get_cart_total(),
                currency='usd',
@@ -244,36 +227,15 @@ def checkout(request, **kwargs):
                source=token,
             )
 
-            return redirect(reverse('launch:item-update', 
+            return redirect(reverse('launch:update_records', 
                      kwargs={
                         'token': token
                      }))
          except stripe.error.CardError as e:
             messages.info(request, e)
 
-      else:
-         result = transact({
-            'amount': existing_order.get_cart_total(),
-            'payment_method_nonce': request.POST['payment_method_nonce'],
-            'options': {
-               "submit_for_settlement": True
-            }
-         })
-
-         if result.is_success or result.transaction:
-            return redirect(reverse('launch:item-update', 
-                     kwargs={
-                        'token': result.transaction.id
-                     }))
-
-         else: 
-            for x in result.errors.deep_errors:
-               messages.info(request, x)
-            return redirect(reverse('launch:item-update'))
-
    context = {
       'order': existing_order,
-      'client_token': client_token,
       'STRIPE_PUBLISHABLE_KEY': publishKey
    }
 
@@ -282,12 +244,7 @@ def checkout(request, **kwargs):
 
 def success(request, **kwargs):
     # a view signifying the transcation was successful
-    return render(request, 'shopping_cart/purchase_success.html', {})
-
-
-
-
-
+    return render(request, 'launch/purchase_success.html')
 
 def home(request):
    if request.user.is_authenticated:
@@ -524,6 +481,8 @@ def delete_from_cart(request, **kwargs):
           item_to_delete.delete()
         messages.info(request, "Item has been deleted")
     return redirect(reverse('launch:order-summary'))
+
+
 
 
 
