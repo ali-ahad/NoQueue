@@ -1,0 +1,27 @@
+{% extends "launch/base.html"%}
+{% block title %}
+   <title>Launch-Home</title>
+{% endblock %}
+{% block content %}
+
+
+    <h1>Item Detail</h1>
+    <div class="restaurant-container">
+      <p>{{ object.name }}</p>
+      <img width="100" height="100" src="{{object.image.url}}"></img>  	     
+      <p>{{ object.cuisine }}</p>
+      <p>{{ object.price }}</p>
+     <p>{{ object.restaurant }}</p>
+     {% if user.is_authenticated%}
+     {% if user.is_owner and user == object.restaurant.owner %}
+      <a href="{% url 'launch:item-update' object.restaurant.pk object.pk%}"><button> 
+      Update {{ object.name}} 
+      </button>
+    </a>
+    
+    {% else %}
+    <a href ="{% url 'launch:add-to-cart' object.restaurant.pk object.pk%}"><button> Add to cart </button></a>
+    {%endif %}
+    {%endif %}
+    </div>
+{% endblock %}

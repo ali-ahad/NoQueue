@@ -40,3 +40,15 @@ div.transbox {
     opacity: 0.6;
     filter: alpha(opacity=60); /* For IE8 and earlier */
   }
+
+
+  div.container-menu{
+  	background-color:gainsboro;
+  }
+ div.container-item{
+  	background-color:orange;
+  }
+ div.container-item-warning{
+  	min-height: 40px;
+  	background-color: yellow;
+  }
