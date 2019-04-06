@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect,reverse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
-from django.core.paginator import Paginator
 from django.conf import settings
 from django.db.models import Q
 from .forms import UserForm, CustomerProfile
@@ -19,6 +18,7 @@ import datetime
 import braintree
 import stripe
 from datetime import date
+import operator
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -110,7 +110,7 @@ class ItemDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
          return True
       else:
          return False
-
+         
 def generate_order_id():
     date_str = date.today().strftime('%Y%m%d')[2:] + str(datetime.datetime.now().second)
     rand_str = "".join([random.choice(string.digits) for count in range(3)])
@@ -481,6 +481,22 @@ def delete_from_cart(request, **kwargs):
           item_to_delete.delete()
         messages.info(request, "Item has been deleted")
     return redirect(reverse('launch:order-summary'))
+
+def search(request):
+   template = 'launch/item_list.html'
+   query = request.GET.get('q')
+
+   if query:
+      results = Restaurant.objects.filter(Q(name__icontains=query))
+   else:
+      results = Restaurant.objects.filer(status='Published')
+
+   context = {
+      'results': results
+   }
+
+   return render(request, template, context)
+
 
 
 

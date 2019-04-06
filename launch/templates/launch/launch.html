@@ -54,7 +54,13 @@
             {% endfor %}
         <a href={% url 'launch:restaurant-create' %}><button type="submit"> Add restaurant </button></a>
 
-         {% else %}
+        {% else %}
+          <form id="searchform" action="{% url 'launch:searchbar' %}" method="GET" accept-charset="utf-8">
+            <button class="searchbutton" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+            <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search" value="{{ request.GET.q }}">
+          </form>
         <h4> Customer </h4>
         <img width="100" height="100" src="{{user.customer_profile.image.url}}"></img>
         <h1>Restaurants</h1>
