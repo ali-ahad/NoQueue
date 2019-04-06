@@ -488,7 +488,7 @@ def search(request):
       results = Restaurant.objects.filter(name__icontains=query)
       print(results)
    else:
-      results = Restaurant.objects.filter(status='Published')
+      results = Restaurant.objects.all()
 
    context = {
       'restaurants': results
