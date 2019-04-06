@@ -1,11 +1,84 @@
-{% extends "launch/base.html"%}
+{% extends 'launch/base.html' %} 
+{% load static %}
+<!-- Page Title -->
 {% block title %}
-   <title>Launch-Home</title>
+    <title>No Queue</title>
+{% endblock  %}
+    <!-- Header Area Starts -->
+{% block header %}
+  <header class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="logo-area">
+                        <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="custom-navbar">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>  
+                    <div class="main-menu">
+                        <ul>
+                            <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
+                            <li><a href={% url 'launch:launch-about' %}>About</a></li>
+                            <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 {% endblock %}
+    <!-- Header Area End -->
 
 {% block content %}
-   <h1>Register</h1>
-   <a href={% url 'launch:launch-register-owner' %}><button type="submit">Owner</button></a>
-   <a href={% url 'launch:launch-register-customer' %}><button type="submit">Customer</button></a>   
+    <!-- Banner Area Starts -->
+    <section class="banner-area text-center">
+        <div class="container">
+      <div class="background">
+                <div class="layer"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Welcome to  <span class="prime-color">NoQueue!</span><br>  
+                    <h6 style="">Never Wait in Line again!</h6>
+            </br><a href={% url 'launch:launch-register-owner' %} class="genric-btn primary circle" >Owner</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href={% url 'launch:launch-register-customer' %} class="genric-btn primary circle">Customer</a>
+            </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Banner Area End -->
 {% endblock %}
+
+{% block footer %}
+  <div class="footer-copyright">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-md-6">
+            <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made  by Group 3
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+        </div>
+          <div class="col-lg-5 col-md-6">
+            <div class="social-icons">
+              <ul>
+                <li class="no-margin">Follow Us</li>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
    
