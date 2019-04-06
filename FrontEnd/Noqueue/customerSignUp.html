@@ -11,7 +11,7 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/x-icon">
-     
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/animate-3.7.0.css">
     <link rel="stylesheet" href="assets/css/font-awesome-4.7.0.min.css">
@@ -19,15 +19,10 @@
     <link rel="stylesheet" href="assets/css/owl-carousel.min.css">
     <link rel="stylesheet" href="assets/css/jquery.datetimepicker.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-	<link rel="stylesheet" href="assets/css/customerSignUp.css">
 	<link href='https://fonts.googleapis.com/css?family=Alegreya Sans SC' rel='stylesheet'>
+	<link rel="stylesheet" href="assets/css/signUpCustomer.css">
 </head>
 <body>
-    <!-- Preloader Starts -->
-    <div class="preloader">
-        <div class="spinner"></div>
-    </div>
-    <!-- Preloader End -->
 
     <!-- Header Area Starts -->
 	<header class="header-area">
@@ -48,13 +43,6 @@
                         <ul>
                             <li class="active"><a href="index.html">home</a></li>
                             <li><a href="about.html">about</a></li>
-                            <li><a href="menu.html">menu</a></li>
-                            <li><a href="#">blog</a>
-                                <ul class="sub-menu">
-                                    <li><a href="blog-home.html">Blog Home</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
                             <li><a href="contact-us.html">contact</a></li>
                             <li><a href="elements.html">Elements</a></li>
                         </ul>
@@ -73,59 +61,56 @@
     <div class="layer">
     </div>
 </div>
-            <div class="row">
-                <div class="col-lg-12">                   
-					<form action="action_page.php" style="border:1px solid #ccc">
-  <div class="container">
-    <form action="">
-					<h3>Registration Form</h3>
-					<div class="form-group">
-						<div class="form-wrapper">
-							<label for="">First Name</label>
-							<input type="text" class="form-control">
-						</div>
-						<div class="form-wrapper">
-							<label for="">Last Name</label>
-							<input type="text" class="form-control">
-						</div>
-					</div>
-					<div class="form-wrapper">
-						<label for="">Email</label>
-						<input type="text" class="form-control">
-					</div>
-					<div class="form-wrapper">
-						<label for="">Password</label>
-						<input type="password" class="form-control">
-					</div>
-					<div class="form-wrapper">
-						<label for="">Confirm Password</label>
-						<input type="password" class="form-control">
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox"> I accept the Terms of Use & Privacy Policy.
-							<span class="checkmark"></span>
-						</label>
-					</div>
-					<a href="customerLaunch.html"><button>Register Now</button></a>
-				</form>
+     <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1 style="color:Black;">Sign-Up</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
+	  <label for="First Name"><b>First name</b></label>
+      <input type="text" placeholder="Enter First Name" name="First Name" required>
+	  
+	  <label for="Last Name"><b>Last Name</b></label>
+      <input type="text" placeholder="Enter Last Name" name="Last Name" required>
+	  
+	  <label for="Username"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="Username" required>
+	  
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+
+      <label for="psw-repeat"><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+      
+	  <label for="image"><b>Enter image</b></label></br>
+      <input type="file" placeholder="Enter image" name="pic" id="pic" required></br></br>
+	  
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label>
+
+      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="submit" class="signupbtn">Sign Up</button>
+      </div>
     </div>
-  </div>
-</form>
-                </div>
-            </div>
+  </form>
         </div>
     </section>
     <!-- Banner Area End -->
 
-    
+		
         <div class="footer-copyright">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
-                        <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+                        <span>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made  by Group 3
+</span>
                     </div>
                     <div class="col-lg-5 col-md-6">
                         <div class="social-icons">
