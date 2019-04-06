@@ -5,6 +5,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
 
+
+
 # Class that sees whether the user is owner or customer
 class User(AbstractUser):
     is_owner = models.BooleanField(default= True)
