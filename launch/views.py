@@ -15,10 +15,8 @@ from .models import Order, OrderItem, Transaction
 import random
 import string
 import datetime
-import braintree
 import stripe
 from datetime import date
-import operator
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
