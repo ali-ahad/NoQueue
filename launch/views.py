@@ -481,19 +481,21 @@ def delete_from_cart(request, **kwargs):
     return redirect(reverse('launch:order-summary'))
 
 def search(request):
-   template = 'launch/item_list.html'
+   template = 'launch/launch.html'
    query = request.GET.get('q')
 
    if query:
-      results = Restaurant.objects.filter(Q(name__icontains=query))
+      results = Restaurant.objects.filter(name__icontains=query)
+      print(results)
    else:
-      results = Restaurant.objects.filer(status='Published')
+      results = Restaurant.objects.filter(status='Published')
 
    context = {
-      'results': results
+      'restaurants': results
    }
 
-   return render(request, template, context)
+
+   return render(request, template,context)
 
 
 
