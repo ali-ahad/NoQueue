@@ -32,7 +32,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='launch/logout.html'), name='logout'),
 
     # Path that shows the profile for customers or owner
-    #path('profile/', views.show_profile, name='profile'),
+    path('profile/', views.show_profile, name='profile'),
 
     #shows detail of restuarant using class based views
     path('restaurant/<int:pk>/', RestaurantDetailView.as_view(), name='restaurant-detail'), 

@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from django.conf import settings
 from django.db.models import Q
+from django import forms
 from .forms import UserForm, CustomerProfile
 from .forms import OwnerProfileForm
 from .forms import CustomerProfileForm
@@ -26,7 +27,18 @@ class RestaurantDetailView(DetailView):
 
 class RestaurantCreateView(CreateView):
    model = Restaurant
-   fields = ['name', 'location', 'cuisine', 'image']
+   fields = ['name', 'location', 'cuisine', 'description','image']
+
+   def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+
+        form = super(RestaurantCreateView, self).get_form(form_class)
+        form.fields['name'].widget = forms.TextInput(attrs={'placeholder': 'Enter restaurant name'})
+        form.fields['location'].widget = forms.TextInput(attrs={'placeholder': 'Enter location'})
+        form.fields['cuisine'].widget = forms.TextInput(attrs={'placeholder': 'Enter cuisine type'})
+        form.fields['description'].widget = forms.TextInput(attrs={'placeholder': 'Enter description'})
+        return form
 
    def form_valid(self,form):
       form.instance.owner = self.request.user
@@ -35,7 +47,7 @@ class RestaurantCreateView(CreateView):
 class RestaurantUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
    login_url = '/login/'
    model = Restaurant
-   fields = ['name', 'location', 'cuisine', 'image']
+   fields = ['name', 'location', 'cuisine', 'description' ,'image']
 
    def form_valid(self,form):
       form.instance.owner = self.request.user

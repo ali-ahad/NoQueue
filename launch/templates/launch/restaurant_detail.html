@@ -3,7 +3,6 @@
    <title>Launch-Home</title>
 {% endblock %}
 {% block content %}
-<<<<<<< HEAD
     <h1>Detail</h1>
     <div class="restaurant-container">
       <p>{{ object.name }}</p>
@@ -16,19 +15,4 @@
       <p><a href="{% url 'launch:restaurant-delete' object.id%}"> Delete </a></p>
       <a href="{% url 'launch:launch-home'%}"><button>Back</button></a>           		
     </div>
-=======
-   <h1>Detail</h1>
-   <div class="restaurant-container">
-    <p>{{ object.name }}</p>
-    <img width="100" height="100" src="{{object.image.url}}"></img>  	     
-    <p>{{ object.cuisine }}</p>
-     <p>{{ object.location }}</p>
-    <p>{{ object.owner }}</p>
-    <p><a href="{% url 'launch:restaurant-menu' object.id%}"> Menu</a></p>
-    <p><a href="{% url 'launch:restaurant-update' object.id%}"> Edit </a></p>
-    <p><a href="{% url 'launch:restaurant-delete' object.id%}"> Delete </a></p>
-    <a href="{% url 'launch:launch-home'%}"><button>Back</button></a>           
-    		
-  </div>
->>>>>>> 88a551558f9b90abbddffe5dec045a6938d43e16
 {% endblock %}
