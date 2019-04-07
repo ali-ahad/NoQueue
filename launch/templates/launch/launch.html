@@ -1,100 +1,126 @@
 {% extends 'launch/base.html' %} 
 {% load static %}
-<!-- Page Title -->
+
 {% block title %}
     <title>No Queue</title>
 {% endblock  %}
-    <!-- Header Area Starts -->
+
 {% block header %}
+
+  <!-- Preloader Starts -->
+  <div class="preloader">
+    <div class="spinner"></div>
+  </div>
+  <!-- Preloader End -->
   <header class="header-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="logo-area">
-                        <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="logo-area">
+                    <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
                 </div>
-                <div class="col-lg-10">
-                    <div class="custom-navbar">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>  
-                    <div class="main-menu">
-                        <ul>
-                            <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
-                            <li><a href={% url 'launch:launch-about' %}>About</a></li>
-                            <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="col-lg-10">
+                <div class="custom-navbar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>  
+                <div class="main-menu">
+                    <ul>
+                        <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
+                        <li><a href={% url 'launch:launch-about' %}>About</a></li>
+                        <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
+                        {% if user.is_authenticated %}
+                          <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+  </header>
 {% endblock %}
     <!-- Header Area End -->
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <h1>Welcome</h1> 
-        <h3>{{user.get_username}}</h3>
-        <a href={% url 'launch:logout' %}><button type="submit"> Logout </button></a>
-
-        {% if user.is_owner %}
-          <img width="100" height="100"src="{{user.owner_profile.image.url}}"></img>
-          <h3> Restaurant owner</h3>
-            <h1>My Restaurants</h1>
-            {% for restaurant in myrestaurants %}
-              <div class="restaurant-container">
-                <p><a href="{% url 'launch:restaurant-detail' restaurant.id%}">{{ restaurant.name }}</a></p>
-                <img width="100" height="100" src="{{restaurant.image.url}}"></img>
-                <p>{{ restaurant.cuisine }}</p>
-                <p>{{ restaurant.location }}</p>        
+  {% if user.is_authenticated %}
+    {% if user.is_owner %}
+      <div class="deshes-area section-padding">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="section-top2 text-center">
+                <h3> View your <span>Restaurants!</span></h3>  
               </div>
-            {% endfor %}
-        <a href={% url 'launch:restaurant-create' %}><button type="submit"> Add restaurant </button></a>
+            </div>
+          </div>
+          {% for restaurant in myrestaurants %}
+            <div class="row" id="Restaurant1">
+              <div class="col-lg-5 col-md-6 align-self-center">
+                <h1 style="color:white;">.</h1>
+                <div class="deshes-text">
+                  <h3 id="RName1"><span>{{ restaurant.name }}</span><br>{{ restaurant.location }}</h3>
+                  <p class="pt-3">Even after nearly seven years in the business, Yardbird attracts diners by the hordes, thanks to being the kind of super hip izakaya/yakitori venue that not even Tokyo denizens would roll their eyes at. The chicken here is treated no differently than the finest piece of toro, that is, with love and care. And it returns the favour by donating literally every part of its body including the thigh, wing, neck, liver, tail or skin.</p>
+                  <span class="style-change"></span>
+                  <a href="{% url 'launch:restaurant-update' restaurant.id%}" class="template-btn3 mt-3">Modify Restaurant <span><i class="fa fa-long-arrow-right"></i></span></a>
+                  </br>
+                  <a href="{% url 'launch:restaurant-delete' restaurant.id%}" class="template-btn3 mt-3">Delete Restaurant <span><i class="fa fa-long-arrow-right"></i></span></a>
+                  </br>
+                  <a href="{% url 'launch:restaurant-menu' restaurant.id%}" class="template-btn3 mt-3">Update Menu <span><i class="fa fa-long-arrow-right"></i></span></a>
+                </div>
+              </div>
+                <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center mt-4 mt-md-0">
+                  <img src="{{restaurant.image.url}}" alt="" class="img-fluid">
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      </br></br>
+      <h3 align="center"><a href="{% url 'launch:restaurant-create' %}" class="template-btn3 mt-3">
+      <p style="color:black;"><strong>Click here to add Restaurant<span><i class="fa fa-long-arrow-right"></i></span></p></a></h3>
+      </div>
 
-        {% else %}
-          <form id="searchform" action="{% url 'launch:searchbar' %}" method="GET" accept-charset="utf-8">
-            <button class="searchbutton" type="submit">
-              <i class="fa fa-search"></i>
-            </button>
-            <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search" value="{{ request.GET.q }}">
-          </form>
-        <h4> Customer </h4>
-        <img width="100" height="100" src="{{user.customer_profile.image.url}}"></img>
-        <h1>Restaurants</h1>
+    {% else %}
+      <form id="searchform" action="{% url 'launch:searchbar' %}" method="GET" accept-charset="utf-8">
+        <button class="searchbutton" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+        <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search" value="{{ request.GET.q }}">
+      </form>
+      <h4> Customer </h4>
+      <img width="100" height="100" src="{{user.customer_profile.image.url}}"></img>
+      <h1>Restaurants</h1>
 
-        {% for restaurant in restaurants %}
+      {% for restaurant in restaurants %}
         <div class="restaurant-container">
           <p><a href="{% url 'launch:restaurant-detail' restaurant.id%}">{{ restaurant.name }}</a></p>
           <img width="100" height="100" src="{{restaurant.image.url}}"></img>
           <p>{{ restaurant.cuisine }}</p>
           <p>{{ restaurant.location }}</p>         
         </div>
-        {% endfor %}   
+      {% endfor %}   
     {% endif %}
 
-    {% else %}
-    <!-- Banner Area Starts -->
+  {% else %}
     <section class="banner-area text-center">
-        <div class="container">
-      <div class="background">
-                <div class="layer"></div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Welcome to  <span class="prime-color">NoQueue!</span><br>  
-                    <h6 style="">Never Wait in Line again!</h6>
-            </br><a href={% url 'launch:login' %} class="genric-btn primary circle" >Log In</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href={% url 'launch:register' %} class="genric-btn primary circle">Register</a>
-            </h1>
-                </div>
-            </div>
+      <div class="container">
+        <div class="background">
+            <div class="layer"></div>
         </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Welcome to  <span class="prime-color">NoQueue!</span><br>  
+              <h6 style="">Never Wait in Line again!</h6>
+              </br><a href={% url 'launch:login' %} class="genric-btn primary circle" >Log In</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href={% url 'launch:register' %} class="genric-btn primary circle">Register</a>
+            </h1>
+          </div>
+        </div>
+      </div>
     </section>
-    {% endif %}
-    <!-- Banner Area End -->
+  {% endif %}
 {% endblock %}
 
 {% block footer %}

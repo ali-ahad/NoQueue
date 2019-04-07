@@ -8,19 +8,10 @@
    <div>
       <h1>Create Restaurant </h1>
       <form method="post" enctype="multipart/form-data" >
-<<<<<<< HEAD
          {% csrf_token %}
          {{ form | crispy }} 
          <button type="submit">Update/Create</button>
          <a href="{% url 'launch:launch-home'%}"><button>Back</button></a>           
       </form>
-=======
-        {% csrf_token %}
-            {{ form | crispy }} 
-         <button type="submit">Update/Create</button>
-         <a href="{% url 'launch:launch-home'%}"><button>Back</button></a>           
-    
-</form>
->>>>>>> 88a551558f9b90abbddffe5dec045a6938d43e16
    </div>
 {% endblock %}
