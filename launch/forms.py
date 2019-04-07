@@ -11,12 +11,22 @@ CHOICES = ['Restaurant Owner', 'Customer']
 
 # Form for registration of a user
 class UserForm(UserCreationForm):
-	first_name = forms.CharField()
-	last_name = forms.CharField()
-	email = forms.EmailField()
+	first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter First Name'}))
+	last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Last Name'}))
+	email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Enter Email'}))
+	
 	class Meta:
 		model = User
 		fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
+		widgets = {
+        'username': forms.fields.TextInput(attrs={'placeholder': 'Enter Username'}),
+		  'password1': forms.fields.TextInput(attrs={'placeholder': 'Enter Password'})  
+    	}
+
+	def __init__(self, *args, **kwargs):
+		super(UserForm, self).__init__(*args, **kwargs)
+		self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': "Enter Password"})
+		self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': "Repeat Password"})
 
 # Class to append the UserCreationForm for restaurant owner
 class OwnerProfileForm(forms.ModelForm):
