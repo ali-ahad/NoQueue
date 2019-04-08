@@ -47,7 +47,13 @@
             <div class="container">
                <h1 style="color:Black;">Sign-Up</h1>
                <p>Please fill in this form to create an account.</p>
+               <br>
+               {% if form.errors %}
+                  {{ form.errors }}
+               {% endif %}
+
                <hr>
+
                <label for="First Name"><b>First name</b></label>
                {{ user_form.first_name }}
       

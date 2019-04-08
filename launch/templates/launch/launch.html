@@ -105,6 +105,69 @@
       </div>
 
     {% else %}
+      <div class="deshes-area section-padding">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="section-top2 text-center">
+                <h3>Our <span>Restaurants</span> for you!</h3>
+                <p><i>View the set of restaurants on our App!</i></p>
+						    </br></br>
+						    <div class="container h-100">
+						      <div class="d-flex justify-content-center h-100">
+                    <form id="searchform" action="{% url 'launch:searchbar' %}" method="GET" accept-charset="utf-8">
+							        <div class="searchbar">
+							          <!--<input class="search_input" type="text" name="" placeholder="Search...">-->
+                        <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search" value="{{ request.GET.q }}">
+							          <!--<a href="#" class="search_icon"><i class="fas fa-search"></i></a>-->
+                        <button class="searchbutton" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+							          <div>
+							            </br>
+							              <a href="recommendationPage.html" class="genric-btn primary-border circle">VIEW RECOMMENDATIONS!</a>
+							          </div>
+							        </div>
+						      </div>
+						      </br>  
+						    </div>
+              </div>
+            </div>
+          </div>
+          {% for restaurant in restaurants %}
+            <div class="row">
+              {% if forloop.counter|modulo:2 == 1 %}
+                <div class="col-lg-5 col-md-6 align-self-center">
+                  <h1>{{ forloop.counter }}.</h1>
+                  <div class="deshes-text">
+                    <h3 id="RName1"><span style="font-size: 60px">{{ restaurant.name }}</span><br> {{ restaurant.loaction }} <span class="style-change">(Continental)</span></h3>
+                    <p class="pt-3" style="word-break:break-all" >{{ restaurant.description }}</p>
+                    <span class="style-change"></span>
+                    <a href="{% url 'launch:restaurant-menu' restaurant.id %}" class="template-btn3 mt-3">Proceed to Restaurant <span><i class="fa fa-long-arrow-right"></i></span></a>
+                  </div>
+                </div>
+                <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center mt-4 mt-md-0">
+                  <img src="{{ restaurant.image.url }}" alt="" class="img-fluid">
+                </div>
+              {% else %}
+                <div class="col-lg-5 col-md-6 align-self-center order-2 order-md-1 mt-4 mt-md-0">
+                    <img src="{{ restaurant.image.url }}" alt="" class="img-fluid">
+                </div>
+                <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center order-1 order-md-2">
+                    <h1>{{ forloop.counter }}.</h1>
+                    <div class="deshes-text">
+                        <h3 id="RName1"><span style="font-size: 60px">{{ restaurant.name }}</span><br>{{ restaurant.location }}<span class="style-change">(Indian)</span></h3>
+                        <p class="pt-3" style="word-break:break-all" >{{ restaurant.description }}</p>
+                        <span class="style-change"></span>
+                        <a href="{% url 'launch:restaurant-menu' restaurant.id %}" class="template-btn3 mt-3">Proceed to Restaurant <span><i class="fa fa-long-arrow-right"></i></span></a>
+                    </div>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!--
       <form id="searchform" action="{% url 'launch:searchbar' %}" method="GET" accept-charset="utf-8">
         <button class="searchbutton" type="submit">
           <i class="fa fa-search"></i>
@@ -122,7 +185,8 @@
           <p>{{ restaurant.cuisine }}</p>
           <p>{{ restaurant.location }}</p>         
         </div>
-      {% endfor %}   
+      {% endfor %} 
+      -->  
     {% endif %}
 
   {% else %}
