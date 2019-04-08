@@ -71,7 +71,9 @@
                         <span class="style-change">${{ item.price }}</span>
                       </div>
                       <p class="pt-3" style="word-break:break-all" >{{ item.description }}</p>
-							        <a href="{% url 'launch:item-update' item.restaurant.pk item.pk%}" class="template-btn3 mt-3">Update Item<span><i class="fa fa-long-arrow-right"></i></span></a>
+							        <a href="{% url 'launch:item-update' item.restaurant.pk item.pk %}" class="template-btn3 mt-3">Update Item<span><i class="fa fa-long-arrow-right"></i></span></a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="{% url 'launch:item-delete' item.restaurant.pk item.pk %}" class="template-btn3 mt-3">Delete Item<span><i class="fa fa-long-arrow-right"></i></span></a>
                     </div>
                   </div>
                 </div>
