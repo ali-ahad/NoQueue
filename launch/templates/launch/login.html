@@ -1,17 +1,82 @@
 {% extends 'launch/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block title %}
    <title>owner Log In</title>
 {% endblock %}
 
+{% block header %}
+   <header class="header-area">
+      <div class="container">
+         <div class="row">
+               <div class="col-lg-2">
+                  <div class="logo-area">
+                     <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                  </div>
+               </div>
+               <div class="col-lg-10">
+                  <div class="custom-navbar">
+                     <span></span>
+                     <span></span>
+                     <span></span>
+                  </div>  
+                  <div class="main-menu">
+                     <ul>
+                           <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
+                           <li><a href={% url 'launch:launch-about' %}>About</a></li>
+                           <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
+                           {% if user.is_authenticated %}
+                           <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
+                           {% endif %}
+                     </ul>
+                  </div>
+               </div>
+         </div>
+      </div>
+   </header>
+{% endblock %}
+
 {% block content %}
+   <section class="banner-area text-center">
+      <div class="container">
+		   <div class="background">
+			   <div class="layer"></div>
+			</div>
+         <form class="modal-content" method="POST">
+            {% csrf_token %}
+            <div class="container">
+               <h1 style="color:Black;">Log-In</h1>
+               <p>Enter Login details.</p>
+               <hr>
+               <label for="username"><b>Username</b></label>
+               {{ form.username }}
+
+               <label for="psw"><b>Password</b></label>
+               {{ form.password }}
+               
+               <label>
+               <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+               </label>
+
+               <div class="clearfix">
+               <a href={% url 'launch:launch-home' %}><button type="button" class="cancelbtn">Cancel</button></a>
+               <button type="submit" class="signupbtn">Log-In</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </section>
+{% endblock %}
+
+<!--
    <div>
       <h1>Login to owner</h1>
       <form method="POST">
          {% csrf_token %}
          <fieldset>
             <legend>Log In</legend>
-            {{ form | crispy }}
+            {{ form.username }}
+            {{ form.password }}
          </fieldset>
          <button type="submit">Sign In</button>
       </form>
@@ -20,4 +85,4 @@
    <div>
       <small>Need an account? <a href={% url 'launch:register' %}>Sign Up</a></small>
    </div>
-{% endblock %}
+-->
