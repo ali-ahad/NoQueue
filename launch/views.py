@@ -49,6 +49,17 @@ class RestaurantUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
    model = Restaurant
    fields = ['name', 'location', 'cuisine', 'description' ,'image']
 
+   def get_form(self, form_class=None):
+      if form_class is None:
+            form_class = self.get_form_class()
+
+      form = super(RestaurantUpdateView, self).get_form(form_class)
+      form.fields['name'].widget = forms.TextInput(attrs={'placeholder': 'Enter restaurant name'})
+      form.fields['location'].widget = forms.TextInput(attrs={'placeholder': 'Enter location'})
+      form.fields['cuisine'].widget = forms.TextInput(attrs={'placeholder': 'Enter cuisine type'})
+      form.fields['description'].widget = forms.TextInput(attrs={'placeholder': 'Enter description'})
+      return form
+
    def form_valid(self,form):
       form.instance.owner = self.request.user
       return super().form_valid(form)
@@ -83,10 +94,20 @@ class MenuDetailView(ListView):
    
 class ItemCreateView(CreateView):
    model = Item
-   fields = ['name', 'price', 'cuisine', 'image']
+   fields = ['name', 'price', 'cuisine', 'description' ,'image']
+
+   def get_form(self, form_class=None):
+      if form_class is None:
+         form_class = self.get_form_class()
+
+      form = super(ItemCreateView, self).get_form(form_class)
+      form.fields['name'].widget = forms.TextInput(attrs={'placeholder': 'Enter item name'})
+      form.fields['price'].widget = forms.TextInput(attrs={'placeholder': 'Enter price'})
+      form.fields['cuisine'].widget = forms.TextInput(attrs={'placeholder': 'Enter cuisine type'})
+      form.fields['description'].widget = forms.TextInput(attrs={'placeholder': 'Enter description'})
+      return form
 
    def form_valid(self,form):
-
       form.instance.restaurant = Restaurant.objects.get(pk = self.kwargs['pk'])
       return super().form_valid(form)
 
@@ -98,7 +119,18 @@ class ItemDetailView(DetailView):
 class ItemUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
    login_url = '/login/'
    model = Item
-   fields = ['name', 'price', 'cuisine', 'image']
+   fields = ['name', 'price', 'cuisine', 'description','image']
+
+   def get_form(self, form_class=None):
+      if form_class is None:
+         form_class = self.get_form_class()
+
+      form = super(ItemUpdateView, self).get_form(form_class)
+      form.fields['name'].widget = forms.TextInput(attrs={'placeholder': 'Enter item name'})
+      form.fields['price'].widget = forms.TextInput(attrs={'placeholder': 'Enter price'})
+      form.fields['cuisine'].widget = forms.TextInput(attrs={'placeholder': 'Enter cuisine type'})
+      form.fields['description'].widget = forms.TextInput(attrs={'placeholder': 'Enter description'})
+      return form
 
    def form_valid(self,form):
       form.instance.restaurant = Restaurant.objects.get(pk = self.kwargs['rk'])

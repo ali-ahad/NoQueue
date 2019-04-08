@@ -1,8 +1,98 @@
 {% extends "launch/base.html"%}
+{% load static %}
+{% load custom_tags %}
 {% block title %}
-   <title>Launch-Home</title>
+   <title>Restaurant-Menu</title>
 {% endblock %}
+
+{% block header %}
+  <div class="preloader">
+    <div class="spinner"></div>
+  </div>
+
+  <header class="header-area">
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-2">
+            <div class="logo-area">
+              <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+            </div>
+          </div>
+          <div class="col-lg-10">
+            <div class="custom-navbar">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>  
+            <div class="main-menu">
+              <ul>
+                <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
+                <li><a href={% url 'launch:launch-about' %}>About</a></li>
+                <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
+                {% if user.is_authenticated %}
+                  <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+  </header>
+{% endblock %}
+
+
 {% block content %}
+  {% if user.is_authenticated %}
+    <section class="food-area section-padding" id="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="section-top">
+                        
+              <p class="pt-3"></p>
+            </div>
+          </div>
+        </div>
+
+        {% if user.is_owner %}
+          {% for item in item_list %}
+            {% if forloop.counter|modulo:3 == 1 %}
+              <div class="row">
+            {% endif %}
+                <div class="col-md-4 col-sm-6">
+                  <div class="single-food">
+                    <div class="food-img">
+                      <img src={{ item.image.url }} class="img-fluid" alt="">
+                    </div>
+                    <div class="food-content">
+                      <div class="d-flex justify-content-between">
+                        <h5>{{ item.name }}</h5>
+                        <span class="style-change">${{ item.price }}</span>
+                      </div>
+                      <p class="pt-3">Face together given moveth divided form Of Seasons that fruitful.</p>
+							        <a href="{% url 'launch:item-update' item.restaurant.pk item.pk%}" class="template-btn3 mt-3">Update Item<span><i class="fa fa-long-arrow-right"></i></span></a>
+                    </div>
+                  </div>
+                </div>
+            {% if forloop.last or forloop.counter|modulo:3 == 0 %}
+                </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
+
+  <h3 align="center">
+		<a href="{% url 'launch:item-create' view.kwargs.pk%}" class="template-btn3 mt-3">					
+			<p style="color:black;" align="center">
+        <strong>Click here to Add Item<span><i class="fa fa-long-arrow-right"></i></span>
+      </p>
+    </a>
+  </h3>
+{% endblock %}
+
+<!--
 <h1> MENU </h1>
 <div class="container-menu">
   {% if item_list %}
@@ -44,5 +134,4 @@
   {% endif %}    
   </div>   
    <a href="{% url 'launch:item-create' view.kwargs.pk%}"><button> Add item </button></a>
-
-{% endblock %}
+-->

@@ -10,7 +10,7 @@
          {% csrf_token %}
          <h2> Are you sure you want to delete the restaurant {{ object.name}}?</h2>
          <button type="submit">Yes, Delete</button>
-         <a href="{% url 'launch:restaurant-detail' object.id%}"><button type="submit">Cancel</button></a>
+         <a href="{% url 'launch:launch-home' %}"><button type="submit">Cancel</button></a>
       </form>
    </div>
 {% endblock %}

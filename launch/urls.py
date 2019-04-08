@@ -35,7 +35,7 @@ urlpatterns = [
     path('profile/', views.show_profile, name='profile'),
 
     #shows detail of restuarant using class based views
-    path('restaurant/<int:pk>/', RestaurantDetailView.as_view(), name='restaurant-detail'), 
+    #path('restaurant/<int:pk>/', RestaurantDetailView.as_view(), name='restaurant-detail'), 
 
     #creates restuarant using class based views
     path('restaurant/new/', RestaurantCreateView.as_view(), name='restaurant-create'),

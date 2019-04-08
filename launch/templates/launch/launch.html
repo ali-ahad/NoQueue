@@ -61,7 +61,7 @@
                 <h1 style="color:white;">.</h1>
                 <div class="deshes-text">
                   <h3 id="RName1"><span>{{ restaurant.name }}</span><br>{{ restaurant.location }}</h3>
-                  <p class="pt-3">Even after nearly seven years in the business, Yardbird attracts diners by the hordes, thanks to being the kind of super hip izakaya/yakitori venue that not even Tokyo denizens would roll their eyes at. The chicken here is treated no differently than the finest piece of toro, that is, with love and care. And it returns the favour by donating literally every part of its body including the thigh, wing, neck, liver, tail or skin.</p>
+                  <p class="pt-3">{{ restaurant.description }}</p>
                   <span class="style-change"></span>
                   <a href="{% url 'launch:restaurant-update' restaurant.id%}" class="template-btn3 mt-3">Modify Restaurant <span><i class="fa fa-long-arrow-right"></i></span></a>
                   </br>
