@@ -94,7 +94,7 @@ class MenuDetailView(ListView):
    
 class ItemCreateView(CreateView):
    model = Item
-   fields = ['name', 'price', 'cuisine', 'description' ,'image']
+   fields = ['name', 'price', 'description' ,'image']
 
    def get_form(self, form_class=None):
       if form_class is None:
@@ -103,7 +103,6 @@ class ItemCreateView(CreateView):
       form = super(ItemCreateView, self).get_form(form_class)
       form.fields['name'].widget = forms.TextInput(attrs={'placeholder': 'Enter item name'})
       form.fields['price'].widget = forms.TextInput(attrs={'placeholder': 'Enter price'})
-      form.fields['cuisine'].widget = forms.TextInput(attrs={'placeholder': 'Enter cuisine type'})
       form.fields['description'].widget = forms.TextInput(attrs={'placeholder': 'Enter description'})
       return form
 
@@ -119,7 +118,7 @@ class ItemDetailView(DetailView):
 class ItemUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
    login_url = '/login/'
    model = Item
-   fields = ['name', 'price', 'cuisine', 'description','image']
+   fields = ['name', 'price', 'description','image']
 
    def get_form(self, form_class=None):
       if form_class is None:
@@ -128,7 +127,6 @@ class ItemUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
       form = super(ItemUpdateView, self).get_form(form_class)
       form.fields['name'].widget = forms.TextInput(attrs={'placeholder': 'Enter item name'})
       form.fields['price'].widget = forms.TextInput(attrs={'placeholder': 'Enter price'})
-      form.fields['cuisine'].widget = forms.TextInput(attrs={'placeholder': 'Enter cuisine type'})
       form.fields['description'].widget = forms.TextInput(attrs={'placeholder': 'Enter description'})
       return form
 

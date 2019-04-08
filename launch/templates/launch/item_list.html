@@ -70,7 +70,7 @@
                         <h5>{{ item.name }}</h5>
                         <span class="style-change">${{ item.price }}</span>
                       </div>
-                      <p class="pt-3">{{ item.description }}</p>
+                      <p class="pt-3" style="word-break:break-all" >{{ item.description }}</p>
 							        <a href="{% url 'launch:item-update' item.restaurant.pk item.pk%}" class="template-btn3 mt-3">Update Item<span><i class="fa fa-long-arrow-right"></i></span></a>
                     </div>
                   </div>

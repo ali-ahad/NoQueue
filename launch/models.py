@@ -23,15 +23,15 @@ class OwnerProfile(models.Model):
 class Item(models.Model):
 	name = models.CharField(max_length=100)
 	price = models.DecimalField(max_digits=6,decimal_places=2, default =0.00)
-	cuisine = models.CharField(max_length=50)
 	description = models.CharField(max_length=60)
 	restaurant = models.ForeignKey('Restaurant', on_delete = models.CASCADE) #gets user from user tables. 
 	image = models.ImageField(default='rest_default.jpg', upload_to='restaurant_pics')
 
 	def __str__(self):
 		return self.name
+
 	def get_absolute_url(self):
-		return reverse('launch:item-detail', kwargs={'rk':self.restaurant.pk, 'pk':self.pk})
+		return reverse('launch:restaurant-menu', kwargs={'pk':self.restaurant.pk})
 
 
 # Class for dealing with customer
