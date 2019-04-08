@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from .models import OwnerProfile
 from .models import CustomerProfile
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm
+from django.forms.widgets import PasswordInput, TextInput
+
 User = get_user_model()
 CHOICES = ['Restaurant Owner', 'Customer']
 
@@ -27,6 +30,10 @@ class UserForm(UserCreationForm):
 		super(UserForm, self).__init__(*args, **kwargs)
 		self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': "Enter Password"})
 		self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': "Repeat Password"})
+
+class CustomAuthForm(AuthenticationForm):
+    username = forms.CharField(widget=TextInput(attrs={'class':'validate','placeholder': 'Enter Username'}))
+    password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'Enter Password'}))
 
 # Class to append the UserCreationForm for restaurant owner
 class OwnerProfileForm(forms.ModelForm):

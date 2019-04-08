@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 from .views import RestaurantDetailView, MenuDetailView,ItemCreateView,ItemDetailView,ItemUpdateView, ItemDeleteView, RestaurantCreateView, RestaurantUpdateView, RestaurantDeleteView
+from launch.forms import CustomAuthForm
 
 app_name = "launch"
 
@@ -28,7 +29,7 @@ urlpatterns = [
     path('customer-register/', views.customer_profile_view, name='launch-register-customer'),
     
     # Paths to redirect towards log in and log out pages
-    path('login/', auth_views.LoginView.as_view(template_name='launch/login.html'), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='launch/login.html', authentication_form=CustomAuthForm), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='launch/logout.html'), name='logout'),
 
     # Path that shows the profile for customers or owner
