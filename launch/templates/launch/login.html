@@ -11,7 +11,7 @@
          <div class="row">
                <div class="col-lg-2">
                   <div class="logo-area">
-                     <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                     <a href="{% url 'launch:launch-home' %}"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
                   </div>
                </div>
                <div class="col-lg-10">
@@ -42,12 +42,18 @@
 		   <div class="background">
 			   <div class="layer"></div>
 			</div>
+
          <form class="modal-content" method="POST">
             {% csrf_token %}
             <div class="container">
                <h1 style="color:Black;">Log-In</h1>
                <p>Enter Login details.</p>
                <hr>
+               
+               {% if form.errors %}
+                  <p>Username or password not correct</p>
+               {% endif %}
+
                <label for="username"><b>Username</b></label>
                {{ form.username }}
 

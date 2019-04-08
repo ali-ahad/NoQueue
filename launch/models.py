@@ -24,7 +24,7 @@ class Item(models.Model):
 	name = models.CharField(max_length=100)
 	price = models.DecimalField(max_digits=6,decimal_places=2, default =0.00)
 	cuisine = models.CharField(max_length=50)
-	description = models.CharField(max_length=1000)
+	description = models.CharField(max_length=60)
 	restaurant = models.ForeignKey('Restaurant', on_delete = models.CASCADE) #gets user from user tables. 
 	image = models.ImageField(default='rest_default.jpg', upload_to='restaurant_pics')
 
@@ -71,7 +71,7 @@ class Restaurant(models.Model):
 	name = models.CharField(max_length=100)
 	location = models.CharField(max_length=300)
 	cuisine = models.CharField(max_length=50)
-	description = models.CharField(max_length=1000)
+	description = models.CharField(max_length=400)
 	owner = models.ForeignKey(User, on_delete = models.CASCADE) #gets user from user tables.
 	image = models.ImageField(default='rest_default.jpg', upload_to='restaurant_pics')
 

@@ -31,13 +31,10 @@
                         <ul>
                             <li class="active"><a href={% url 'launch:launch-home' %}>home</a></li>
                             <li><a href={% url 'launch:launch-about' %}>about</a></li>
-                            <li><a href="#">blog</a>
-                                <ul class="sub-menu">
-                                    <li><a href={% url 'launch:launch-bloghome' %}>Blog Home</a></li>
-                                    <li><a href={% url 'launch:launch-blogdetails' %}>Blog Details</a></li>
-                                </ul>
-                            </li>
                             <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
