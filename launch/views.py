@@ -205,7 +205,7 @@ def delete_from_cart(request, item_id):
     if item_to_delete.exists():
         item_to_delete[0].delete()
         messages.info(request, "Item has been deleted")
-    return redirect(reverse('launch:order_summary'))
+    return redirect(reverse('launch:order-summary'))
 
 def order_details(request, **kwargs):
     existing_order = get_user_pending_order(request)
@@ -508,7 +508,7 @@ def order_details(request, **kwargs):
     }
     return render(request, 'launch/order_summary.html', context)
   else:
-    return render(request, 'launch:launch-home')
+    return render(request, 'launch:order-summary')
 
 
 def delete_from_cart(request, **kwargs):

@@ -1,9 +1,73 @@
 {% extends "launch/base.html"%}
 {% block title %}
-   <title>Launch-Home</title>
+{% load static %}
+   <title>Order Summary</title>
 {% endblock %}
-{% block content %}
 
+{% block header %}
+  <header class="header-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="logo-area">
+                    <a href={% url 'launch:launch-home' %}><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <div class="custom-navbar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>  
+                <div class="main-menu">
+                    <ul>
+                        <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
+                        <li><a href={% url 'launch:launch-about' %}>About</a></li>
+                        <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
+                        {% if user.is_authenticated %}
+                          <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+  <br><br><br><br><br><br><br>
+  <section class="container content-section">
+    <h2 class="section-header">CART</h2>
+    <div class="cart-row">
+      <span class="cart-item cart-header cart-column">ITEM</span>
+      <span class="cart-price cart-header cart-column">PRICE</span>
+      <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+    </div>
+    <div class="cart-items">
+      {% for item in order.get_cart_items %}
+        <div class="cart-row">
+          <div class="cart-item cart-column">
+            <img class="cart-item-image" src={{ item.product.image.url }} width="100" height="100">
+            <span class="cart-item-title">{{ item.product.name }}</span>
+          </div>
+          <span class="cart-price cart-column">${{ item.product.price }}</span>
+          <div class="cart-quantity cart-column">
+            <input class="cart-quantity-input" type="number" value={{ item.quantity}}>
+            <a href="{% url 'launch:delete-item' item.id %}" onclick="return confirm_delete();"><button class="btn btn-danger" type="button">REMOVE</button></a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="cart-total">
+        <strong class="cart-total-title">Total</strong>
+        <span class="cart-total-price">${{ order.get_cart_total }}</span>
+    </div>
+        <!--<button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
+  </section>
+{% endblock %}
+
+<!--
 <section>
    <div class="row">
     <table class="table table-hover table-bordered text-center">
@@ -60,4 +124,4 @@
      
    </div>
  </section>
-{% endblock %}
+-->

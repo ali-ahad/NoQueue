@@ -61,8 +61,10 @@
           {% endif %}
               <div class="col-md-4 col-sm-6">
                 <div class="single-food">
-                  <div class="food-img">
-                    <img src={{ item.image.url }} class="img-fluid" alt="">
+                  <div class="crop">
+                    <div class="food-img">
+                      <img src="{{ item.image.url }}" class="img-fluid" alt="">
+                    </div>
                   </div>
                   <div class="food-content">
                     <div class="d-flex justify-content-between">
@@ -104,21 +106,6 @@
           </p>
         </a>
       </h3>     
-      <a name = "Cart">
-        <section class="container content-section">
-          <h2 class="section-header">CART</h2>
-          <div class="cart-row">
-            <span class="cart-item cart-header cart-column">ITEM</span>
-            <span class="cart-price cart-header cart-column">PRICE</span>
-            <span class="cart-quantity cart-header cart-column">QUANTITY</span>
-          </div>
-            <div class="cart-items"></div>
-            <div class="cart-total">
-              <strong class="cart-total-title">Total</strong>
-              <span class="cart-total-price">$0</span>
-            </div>
-        </section>
-      </a>
     {% endif %}
   {% endif %}
 {% endblock %}
