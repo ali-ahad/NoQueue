@@ -7,7 +7,7 @@
    padding: 10px;
    }
 
-.searchfield{
+.search_input{
 color: white;
 border: 0;
 outline: 0;
@@ -30,7 +30,7 @@ background: white;
 color: #e74c3c;
 }
 
-.searchbutton{
+.search_icon{
 height: 40px;
 width: 40px;
 float: right;

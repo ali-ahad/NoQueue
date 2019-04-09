@@ -48,51 +48,79 @@
         <div class="row">
           <div class="col-md-5">
             <div class="section-top">
-                        
+              <h3><span class="style-change">Click on an item to add it to your cart.</span></h3>
               <p class="pt-3"></p>
             </div>
           </div>
         </div>
 
-        {% if user.is_owner %}
-          {% for item in item_list %}
-            {% if forloop.counter|modulo:3 == 1 %}
-              <br>
-              <div class="row">
-            {% endif %}
-                <div class="col-md-4 col-sm-6">
-                  <div class="single-food">
-                    <div class="food-img">
-                      <img src={{ item.image.url }} class="img-fluid" alt="">
+        {% for item in item_list %}
+          {% if forloop.counter|modulo:3 == 1 %}
+            <br>
+            <div class="row">
+          {% endif %}
+              <div class="col-md-4 col-sm-6">
+                <div class="single-food">
+                  <div class="food-img">
+                    <img src={{ item.image.url }} class="img-fluid" alt="">
+                  </div>
+                  <div class="food-content">
+                    <div class="d-flex justify-content-between">
+                      <h5>{{ item.name }}</h5>
+                      <span class="style-change">${{ item.price }}</span>
                     </div>
-                    <div class="food-content">
-                      <div class="d-flex justify-content-between">
-                        <h5>{{ item.name }}</h5>
-                        <span class="style-change">${{ item.price }}</span>
-                      </div>
-                      <p class="pt-3" style="word-break:break-all" >{{ item.description }}</p>
-							        <a href="{% url 'launch:item-update' item.restaurant.pk item.pk %}" class="template-btn3 mt-3">Update Item<span><i class="fa fa-long-arrow-right"></i></span></a>
+                    <p class="pt-3" style="word-break:break-all" >{{ item.description }}</p>
+                    {% if user.is_owner %}
+                      <a href="{% url 'launch:item-update' item.restaurant.pk item.pk %}" class="template-btn3 mt-3">Update Item<span><i class="fa fa-long-arrow-right"></i></span></a>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <a href="{% url 'launch:item-delete' item.restaurant.pk item.pk %}" class="template-btn3 mt-3">Delete Item<span><i class="fa fa-long-arrow-right"></i></span></a>
-                    </div>
+                    {% else %}
+                      <a href="{% url 'launch:add-to-cart' item.restaurant.pk item.pk%}" class="template-btn3 mt-3">Add to Cart<span><i class="fa fa-long-arrow-right"></i></span></a>
+                    {% endif %}
                   </div>
                 </div>
-            {% if forloop.last or forloop.counter|modulo:3 == 0 %}
-                </div>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
+              </div>
+          {% if forloop.last or forloop.counter|modulo:3 == 0 %}
+              </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </section>
   {% endif %}
-
-  <h3 align="center">
-		<a href="{% url 'launch:item-create' view.kwargs.pk%}" class="template-btn3 mt-3">					
-			<p style="color:black;" align="center">
-        <strong>Click here to Add Item<span><i class="fa fa-long-arrow-right"></i></span>
-      </p>
-    </a>
-  </h3>
+  {% if user.is_authenticated %}
+    {% if user.is_owner %}
+      <h3 align="center">
+        <a href="{% url 'launch:item-create' view.kwargs.pk%}" class="template-btn3 mt-3">					
+          <p style="color:black;" align="center">
+            <strong>Click here to Add Item<span><i class="fa fa-long-arrow-right"></i></span>
+          </p>
+        </a>
+      </h3>
+    {% else %}
+      <h3 align="center">
+        <a href="{% url 'launch:order-summary' view.kwargs.pk%}" class="template-btn3 mt-3">					
+          <p style="color:black;" align="center">
+            <strong>Proceed to cart<span><i class="fa fa-long-arrow-right"></i></span>
+          </p>
+        </a>
+      </h3>     
+      <a name = "Cart">
+        <section class="container content-section">
+          <h2 class="section-header">CART</h2>
+          <div class="cart-row">
+            <span class="cart-item cart-header cart-column">ITEM</span>
+            <span class="cart-price cart-header cart-column">PRICE</span>
+            <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+          </div>
+            <div class="cart-items"></div>
+            <div class="cart-total">
+              <strong class="cart-total-title">Total</strong>
+              <span class="cart-total-price">$0</span>
+            </div>
+        </section>
+      </a>
+    {% endif %}
+  {% endif %}
 {% endblock %}
 
 <!--
