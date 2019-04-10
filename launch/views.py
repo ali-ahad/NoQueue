@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db.models import Q
 from django import forms
 from .forms import UserForm, CustomerProfile
-from .forms import CustomerProfileForm
+from .forms import CustomerProfileForm, OwnerProfileForm
 from .forms import UserUpdateForm
 from .forms import CustomerUpdateForm
 from .forms import OwnerUpdateForm
