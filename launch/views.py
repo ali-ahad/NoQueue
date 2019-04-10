@@ -18,7 +18,7 @@ import string
 import datetime
 import stripe
 from datetime import date
-
+import random
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -607,16 +607,37 @@ def displayReceivedOrders(request, **kwargs):
 
 def recommendation(request, **kwargs):
 
-   restaurant_list = list()
-   restaurants = Restaurant.objects.all()
+   user_profile = get_object_or_404(CustomerProfile, user=request.user)
+   Owner_list = OwnerProfile.objects.all()
+   recommendations = []
+   owner_range = len(Owner_list)
+   rec_count =0
+   print("Owner count: "+ str(len(Owner_list)))
 
-   for restaurant in restaurants:
-      restaurant_list.append(restaurant.pk)
 
-   print("Restaurant count: " + str(len(restaurant_list)))
 
-   for restaurant in restaurant_list:
-      print("Restaurant pk: " + str(restaurant))
+   for owners1 in Owner_list:
+      RestaurantList = Restaurant.objects.filter(owner = owners1).all()
+      owner_rest_range = len(RestaurantList)
+      i = 0
+      if(owner_rest_range > 0 and rec_count<=3):
+         rec_count+=1
+         random_list = random.randint(0, owner_rest_range-1)
+         recommendations.append(RestaurantList[random_list])
+      else:
+         continue
+   
+   if(rec_count==0):
+      print("No restaurants available")
+   else:
+      for restaurant in recommendations:
+         print("Restaurant name: " + str(restaurant.name) )
+         print("Restaurant owner: " + str(restaurant.owner))
 
+
+   context ={
+      'recommendation': recommendation
+   }
+   
 
    return render(request, 'launch/recommendationPage.html')
