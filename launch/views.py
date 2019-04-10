@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect,reverse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Q
 from django import forms
@@ -156,6 +157,7 @@ def generate_order_id():
     rand_str = "".join([random.choice(string.digits) for count in range(3)])
     return date_str + rand_str
 
+@login_required()
 def add_to_cart(request, **kwargs):
     # get the user profile
     user_profile = get_object_or_404(CustomerProfile, user=request.user)
@@ -191,6 +193,7 @@ def add_to_cart(request, **kwargs):
     messages.info(request, "item added to cart")
     return redirect(reverse('launch:item-detail', kwargs=kwargs))
 
+@login_required()
 def get_user_pending_order(request):
     # get order for the correct user
     user_profile = get_object_or_404(CustomerProfile, user=request.user)
@@ -200,6 +203,7 @@ def get_user_pending_order(request):
         return order[0]
     return 0
 
+@login_required()
 def delete_from_cart(request, item_id):
     item_to_delete = OrderItem.objects.filter(pk=item_id)
     if item_to_delete.exists():
@@ -207,6 +211,7 @@ def delete_from_cart(request, item_id):
         messages.info(request, "Item has been deleted")
     return redirect(reverse('launch:order-summary'))
 
+@login_required()
 def order_details(request, **kwargs):
     existing_order = get_user_pending_order(request)
     context = {

@@ -45,24 +45,26 @@
       <span class="cart-quantity cart-header cart-column">QUANTITY</span>
     </div>
     <div class="cart-items">
-      {% for item in order.get_cart_items %}
-        <div class="cart-row">
-          <div class="cart-item cart-column">
-            <img class="cart-item-image" src={{ item.product.image.url }} width="100" height="100">
-            <span class="cart-item-title">{{ item.product.name }}</span>
+      {% if user.is_authenticated %}
+        {% for item in order.get_cart_items %}
+          <div class="cart-row">
+            <div class="cart-item cart-column">
+              <img class="cart-item-image" src={{ item.product.image.url }} width="100" height="100">
+              <span class="cart-item-title">{{ item.product.name }}</span>
+            </div>
+            <span class="cart-price cart-column">${{ item.product.price }}</span>
+            <div class="cart-quantity cart-column">
+              <input class="cart-quantity-input" type="number" value={{ item.quantity}}>
+              <a href="{% url 'launch:delete-item' item.id %}" onclick="return confirm_delete();"><button class="btn btn-danger" type="button">REMOVE</button></a>
+            </div>
           </div>
-          <span class="cart-price cart-column">${{ item.product.price }}</span>
-          <div class="cart-quantity cart-column">
-            <input class="cart-quantity-input" type="number" value={{ item.quantity}}>
-            <a href="{% url 'launch:delete-item' item.id %}" onclick="return confirm_delete();"><button class="btn btn-danger" type="button">REMOVE</button></a>
-          </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
     </div>
     <div class="cart-total">
         <strong class="cart-total-title">Total</strong>
         {% if order.get_cart_items %}
-        <span class="cart-total-price">${{ order.get_cart_total }}</span>
+          <span class="cart-total-price">${{ order.get_cart_total }}</span>
         {% endif %}
     </div>
         <!--<button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
