@@ -1,2 +1,3 @@
 db.sqlite3
-/launch/migrations
+/launch/migrations/*
+*/__pycache__/*
