@@ -1,0 +1,14 @@
+{% extends 'launch/base.html' %}
+
+{% block content %}
+   <form action="" class="modal-content" method="POST" enctype="multipart/form-data" >
+   {% csrf_token %}
+   <label for="Year"><b>Year</b></label>
+   {{ date_form.as_p }}
+
+
+   <br/>
+   <button  type="submit" value="Submit" class="btn">
+   </form>
+            
+{% endblock %}

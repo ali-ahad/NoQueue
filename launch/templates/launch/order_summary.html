@@ -69,6 +69,16 @@
     </div>
         <!--<button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
   </section>
+  <section>
+
+        <form class="modal-content" method="post" enctype="multipart/form-data" >
+          {% csrf_token %}
+          <label for="Date"><b>Date</b></label>
+          {{ date_form.Date }}
+          <br/>
+          <input id="submit" type="submit" value="Submit" class="btn">
+        </form>
+  </section>
 
   <section class="table-area section-padding">
     <div class="container">
@@ -82,14 +92,13 @@
       </div>
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
-          <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+
+
             <!--
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
               </div>
-              {{}}
             </div>
             <div class="input-group mb-3" align="right">
               <div class="input-group-prepend">
@@ -97,18 +106,18 @@
               </div>
               <input type="text" id="datepicker2" value="{{ collect_timestamp.datetime.time }}">
             </div>
-            -->
-            {{ form.as_p }}     
+            -->  
             <div class="table-btn text-center">
               {% if order.get_cart_items %}
-                <a href="{% url 'launch:purchase_success' %}" class="template-btn template-btn2 mt-4"><button class="btn btn-danger" type="submit" style="float:right">Place Order</button></a>
+                <a href="{% url 'launch:dateForm' %}" class="template-btn template-btn2 mt-4"><button class="btn btn-danger" type="submit" style="float:right">Place Order</button></a>
               {% endif %}
             </div>
-          </form>
+        
         </div>
       </div>
     </div>
   </section>
+
 {% endblock %}
 
 <!--

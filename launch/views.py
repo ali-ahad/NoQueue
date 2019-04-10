@@ -9,7 +9,7 @@ from django import forms
 from .forms import UserForm, CustomerProfile
 from .forms import CustomerProfileForm, OwnerProfileForm
 from .forms import UserUpdateForm
-from .forms import CustomerUpdateForm
+from .forms import CustomerUpdateForm, PreForm
 from .forms import OwnerUpdateForm
 from .models import Restaurant, Item 
 from .models import Order, OrderItem, Transaction, OwnerProfile
@@ -363,6 +363,34 @@ def owner_profile_view(request):
          'profile_form': profile_form,
       })
 
+def dateForm(request):
+   date_forms = PreForm(request.POST)
+   if date_forms.is_valid():
+      Date = str(date_forms['year'].value())+"-"+str(date_forms['month'].value())+"-"+str(date_forms['day'].value())+" "+str(date_forms['hour'].value())+":"+str(date_forms['min'].value())+":"+"00"
+      print(Date)
+      Date = datetime.datetime.strptime(Date, '%Y-%m-%d %H:%M:%S')
+      print("Date time: ", Date)
+
+      user_profile = get_object_or_404(CustomerProfile, user=request.user)
+      transactions = Transaction.objects.filter(profile = user_profile, isTransacted=False).first()
+      transactions.collect_timestamp=Date
+      transactions.isTransacted =True
+      transactions.save()
+
+
+      return redirect('launch:purchase_success')
+        
+   else:
+      user_form = UserForm(prefix='UF')
+      profile_form = OwnerProfileForm(prefix='PF')
+
+   return render(request, 'launch/dateform.html',{
+   'date_form': date_forms,
+})
+     
+  
+
+
 # Function that works then customer registers
 def customer_profile_view(request):
    if request.method == 'POST':
@@ -553,6 +581,7 @@ def insertTransaction(request, **kwargs):
    result = orders.all()
    token = "1234"
    new_ref = 0
+
    for i, order in enumerate(result):
       print(i)
       order.is_ordered=True
@@ -581,7 +610,7 @@ def insertTransaction(request, **kwargs):
 
 
 
-   return render(request, 'launch/purchase_success.html')
+   return render(request, 'launch/dateform.html')
 
 
 
@@ -641,4 +670,7 @@ def recommendation(request, **kwargs):
    
 
    return render(request, 'launch/recommendationPage.html')
+
+
+
 

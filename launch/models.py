@@ -120,6 +120,7 @@ class Transaction(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 	collect_timestamp = models.DateTimeField(auto_now_add=False, auto_now=False, default=datetime.datetime.now)
 	owner = models.ForeignKey(OwnerProfile, on_delete = models.CASCADE, default = 0)
+	isTransacted = models.BooleanField(default=False)
 
 	def get_order_total(self):
 		sum = 0
