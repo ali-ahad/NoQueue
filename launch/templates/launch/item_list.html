@@ -46,9 +46,15 @@
     <section class="food-area section-padding" id="main">
       <div class="container">
         <div class="row">
+        
           <div class="col-md-5">
+
             <div class="section-top">
+              {% if user.is_owner %}
+              <h3><span class="style-change">Your Menu.</span></h3>
+              {% else %}
               <h3><span class="style-change">Click on an item to add it to your cart.</span></h3>
+              {% endif %}
               <p class="pt-3"></p>
             </div>
           </div>

@@ -41,10 +41,11 @@ class RestaurantCreateView(CreateView):
         return form
 
    def form_valid(self,form):
-      form.instance.owner = self.request.user
+      user_profile = get_object_or_404(OwnerProfile, user=self.request.user)
+      form.instance.owner = user_profile
       return super().form_valid(form)
 
-class RestaurantUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+class RestaurantUpdateView(UpdateView):
    login_url = '/login/'
    model = Restaurant
    fields = ['name', 'location', 'cuisine', 'description' ,'image']
@@ -61,7 +62,8 @@ class RestaurantUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
       return form
 
    def form_valid(self,form):
-      form.instance.owner = self.request.user
+      user_profile = get_object_or_404(OwnerProfile, user=self.request.user)
+      form.instance.owner = user_profile
       return super().form_valid(form)
 
    def test_func(self):
@@ -71,7 +73,7 @@ class RestaurantUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
       else:
          return False
 
-class RestaurantDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+class RestaurantDeleteView(DeleteView):
    model = Restaurant
    success_url = '/'
    def test_func(self):
@@ -115,7 +117,7 @@ class ItemDetailView(DetailView):
    model = Item
 
 
-class ItemUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+class ItemUpdateView(UpdateView):
    login_url = '/login/'
    model = Item
    fields = ['name', 'price', 'description','image']
@@ -140,8 +142,8 @@ class ItemUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
          return True
       else:
          return False
-
-class ItemDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+#LoginRequiredMixin,UserPassesTestMixin
+class ItemDeleteView(DeleteView):
    model = Item
    success_url = '/'
    def test_func(self):
@@ -291,13 +293,15 @@ def success(request, **kwargs):
     return render(request, 'launch/purchase_success.html')
 
 def home(request):
+
    if request.user.is_authenticated:
       username = request.user.username
 
       if request.user.is_owner:
+         user_profile = get_object_or_404(OwnerProfile, user=request.user)
          context = {
             'restaurants': Restaurant.objects.all(),
-            'myrestaurants': Restaurant.objects.filter(owner = request.user.id)
+            'myrestaurants': Restaurant.objects.filter(owner = user_profile)
          }
          return render(request, 'launch/launch.html', context)
 
