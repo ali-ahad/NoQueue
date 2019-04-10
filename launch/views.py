@@ -607,4 +607,16 @@ def displayReceivedOrders(request, **kwargs):
 
 def recommendation(request, **kwargs):
 
+   restaurant_list = list()
+   restaurants = Restaurant.objects.all()
+
+   for restaurant in restaurants:
+      restaurant_list.append(restaurant.pk)
+
+   print("Restaurant count: " + str(len(restaurant_list)))
+
+   for restaurant in restaurant_list:
+      print("Restaurant pk: " + str(restaurant))
+
+
    return render(request, 'launch/recommendationPage.html')
