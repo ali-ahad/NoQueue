@@ -662,14 +662,14 @@ def recommendation(request, **kwargs):
       for restaurant in recommendations:
          print("Restaurant name: " + str(restaurant.name) )
          print("Restaurant owner: " + str(restaurant.owner))
+   if request.user.is_authenticated:
+      context ={
+      'recommendation': recommendations
+      }
+      
+      print("Context: ", context )
 
-
-   context ={
-      'recommendation': recommendation
-   }
-   
-
-   return render(request, 'launch/recommendationPage.html')
+   return render(request, 'launch/recommendationPage.html', context)
 
 
 
