@@ -601,10 +601,6 @@ def displayReceivedOrders(request, **kwargs):
 
    return context
 
-
-   
-
-
 def recommendation(request, **kwargs):
 
    user_profile = get_object_or_404(CustomerProfile, user=request.user)
@@ -641,3 +637,4 @@ def recommendation(request, **kwargs):
    
 
    return render(request, 'launch/recommendationPage.html')
+

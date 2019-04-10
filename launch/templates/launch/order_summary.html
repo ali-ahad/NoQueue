@@ -83,19 +83,22 @@
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
           <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
               </div>
-              <input type="text" id="datepicker">
+              {{}}
             </div>
             <div class="input-group mb-3" align="right">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
               </div>
-              <input type="text" id="datepicker2">
+              <input type="text" id="datepicker2" value="{{ collect_timestamp.datetime.time }}">
             </div>
-                    
+            -->
+            {{ form.as_p }}     
             <div class="table-btn text-center">
               {% if order.get_cart_items %}
                 <a href="{% url 'launch:purchase_success' %}" class="template-btn template-btn2 mt-4"><button class="btn btn-danger" type="submit" style="float:right">Place Order</button></a>
