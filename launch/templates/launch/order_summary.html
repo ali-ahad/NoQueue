@@ -65,8 +65,6 @@
         <strong class="cart-total-title">Total</strong>
         {% if order.get_cart_items %}
           <span class="cart-total-price">${{ order.get_cart_total }}</span>
-          <br>
-          <a href={% url 'launch:purchase_success' %}><button class="btn btn-danger" type="button" style="float:right">Checkout</button></a>
         {% endif %}
     </div>
         <!--<button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
@@ -84,7 +82,7 @@
       </div>
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
-          <form action="#">
+          <form method="post" enctype="multipart/form-data">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -99,7 +97,9 @@
             </div>
                     
             <div class="table-btn text-center">
-                <a href="#" class="template-btn template-btn2 mt-4">Place Order</a>
+              {% if order.get_cart_items %}
+                <a href="{% url 'launch:purchase_success' %}" class="template-btn template-btn2 mt-4"><button class="btn btn-danger" type="submit" style="float:right">Place Order</button></a>
+              {% endif %}
             </div>
           </form>
         </div>
