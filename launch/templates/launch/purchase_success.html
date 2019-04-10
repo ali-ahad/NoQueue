@@ -1,6 +1,56 @@
 {% extends 'launch/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Pruchase Success!</title>
+{% endblock %}
+
+{% block header %}
+   <header class="header-area">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-2">
+               <div class="logo-area">
+                  <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+               </div>
+            </div>
+            <div class="col-lg-10">
+               <div class="custom-navbar">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+               </div>  
+               <div class="main-menu">
+                  <ul>
+                     <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
+                     <li><a href={% url 'launch:launch-about' %}>About</a></li>
+                     <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </header>
+{% endblock %}
 
 {% block content %}
-    <h1>Thank you for your purchase!</h1>
-    <a href="{% url 'launch:launch-home' %}">Head back home</a>
+   <section class="banner-area text-center">
+      <div class="container">
+			<div class="background">
+            <div class="layer"></div>
+         </div>
+         <div class="row">
+            <div class="col-lg-12">
+               <h1>Thank you for your <span class="prime-color">purchase!</span><br>  
+                  </br>
+                  <h6>Return to home page?</h6>
+                  </br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a href="{% url 'launch:launch-home' %}" class="genric-btn primary circle" style="width:auto;">Home</a> 
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </h1>
+            </div>
+         </div>
+      </div>
+   </section>
 {% endblock content %}

@@ -577,7 +577,7 @@ def insertTransaction(request, **kwargs):
 
 
 
-   return render(request, 'launch/launch.html')
+   return render(request, 'launch/purchase_success.html')
 
 
 

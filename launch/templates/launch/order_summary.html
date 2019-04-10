@@ -65,13 +65,47 @@
         <strong class="cart-total-title">Total</strong>
         {% if order.get_cart_items %}
           <span class="cart-total-price">${{ order.get_cart_total }}</span>
+          <br>
+          <a href={% url 'launch:purchase_success' %}><button class="btn btn-danger" type="button" style="float:right">Checkout</button></a>
         {% endif %}
     </div>
         <!--<button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
   </section>
-<br><br><br>
-<a href={% url 'launch:Trans' %}><button class="btn btn-danger" type="button" style="float:right">Checkout</button></a>
 
+  <section class="table-area section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-top2 text-center">
+            <h3>Preorder <span>your</span> Food</h3>
+            <p><i>Specify the Date and Time you want to pick it up!</i></p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+          <form action="#">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+              </div>
+              <input type="text" id="datepicker">
+            </div>
+            <div class="input-group mb-3" align="right">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
+              </div>
+              <input type="text" id="datepicker2">
+            </div>
+                    
+            <div class="table-btn text-center">
+                <a href="#" class="template-btn template-btn2 mt-4">Place Order</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}
 
 <!--
