@@ -8,6 +8,7 @@ from .models import CustomerProfile
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms.widgets import PasswordInput, TextInput
+from django.forms import ModelForm
 
 User = get_user_model()
 CHOICES = ['Restaurant Owner', 'Customer']
@@ -66,4 +67,9 @@ class OwnerUpdateForm(forms.ModelForm):
 	class Meta:
 		model = OwnerProfile
 		fields = ['image']
+
+class DateInput(forms.DateInput):
+	input_type = 'date'
+
+
         

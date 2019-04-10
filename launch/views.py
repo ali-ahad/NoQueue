@@ -601,10 +601,7 @@ def displayReceivedOrders(request, **kwargs):
 
    return context
 
-
-   
-
-
 def recommendation(request, **kwargs):
 
    return render(request, 'launch/recommendationPage.html')
+
