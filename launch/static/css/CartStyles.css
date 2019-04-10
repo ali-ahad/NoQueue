@@ -127,6 +127,20 @@ html, body {
     vertical-align: middle;
     padding: .67em .67em;
     cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    word-wrap: break-word;
+    font-family: 'Alegreya Sans SC';
+    font-size: 20px;
+    color: #668ad8;
+    width: 150px;
+    height: 50px;
+    border-radius: 50%;
+    border: double 4px #668ad8;
+    text-align: center;
+    overflow: hidden;
+    transition: .6s;
+    line-height: 0;
 }
 
 .btn-header {
