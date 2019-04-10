@@ -64,7 +64,7 @@ urlpatterns = [
     path('checkout/success/', views.insertTransaction, name='purchase_success'),
     path('search-results/', views.search, name='searchbar'),
     #path('test/', views.insertTransaction, name='Trans')
-    
+    path('recommendation/', views.recommendation, name='recommendation')
 
     
 
