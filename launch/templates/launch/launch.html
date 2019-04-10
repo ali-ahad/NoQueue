@@ -251,11 +251,36 @@
           </div>
           <div class="row">
             <div class="col-lg-12">
+<<<<<<< HEAD
+              <div class="section-top2 text-center">
+                <h3>Our <span>Restaurants</span> for you!</h3>
+                <p><i>View the set of restaurants on our App!</i></p>
+						    </br></br>
+						    <div class="container h-100">
+						      <div class="d-flex justify-content-center h-100">
+                    <form id="searchform" action="{% url 'launch:searchbar' %}" method="GET" accept-charset="utf-8">
+							        <div class="searchbar">
+							          <!--<input class="search_input" type="text" name="" placeholder="Search..."> -->
+                        <input class="search_input" id="searchbox" name="q" type="text" placeholder="Search" value="{{ request.GET.q }}">
+							          <a href="{% url 'launch:searchbar' %}" class="search_icon"><i class="fas fa-search"></i></a>
+                        <!--<button class="searchbutton" type="submit"><i class="fas fa-search"></i></button>-->
+                    </form>
+							          <div>
+							            </br>
+							              <a href="{% url 'launch:launch-home' %}" class="genric-btn primary-border circle">VIEW RECOMMENDATIONS!</a>
+							          </div>
+							        </div>
+						      </div>
+						      </br>  
+						    </div>
+              </div>
+=======
               <h1>Welcome to  <span class="prime-color">NoQueue!</span><br>  
                 <h6 style="">Never Wait in Line again!</h6>
                 </br><a href={% url 'launch:login' %} class="genric-btn primary circle" >Log In</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href={% url 'launch:register' %} class="genric-btn primary circle">Register</a>
               </h1>
+>>>>>>> master
             </div>
           </div>
         </div>

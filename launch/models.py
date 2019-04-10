@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
-
+import datetime
 
 
 # Class that sees whether the user is owner or customer
@@ -72,7 +72,7 @@ class Restaurant(models.Model):
 	location = models.CharField(max_length=300)
 	cuisine = models.CharField(max_length=50)
 	description = models.CharField(max_length=400)
-	owner = models.ForeignKey(User, on_delete = models.CASCADE) #gets user from user tables.
+	owner = models.ForeignKey(OwnerProfile, on_delete = models.CASCADE) #gets user from user tables.
 	image = models.ImageField(default='rest_default.jpg', upload_to='restaurant_pics')
 
 	def __str__(self):
@@ -83,8 +83,10 @@ class Restaurant(models.Model):
 	
 
 class OrderItem(models.Model):
-    product = models.OneToOneField(Item, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Item, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(default = 1)
+    is_ordered = models.BooleanField(default=False)
+
     
     def __str__(self):
         return self.product.name
@@ -111,15 +113,31 @@ class Order(models.Model):
         return '{0} - {1}'.format(self.owner, self.ref_code)
 
 class Transaction(models.Model):
-    profile = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
-    token = models.CharField(max_length=120)
-    order_id = models.CharField(max_length=120)
-    amount = models.DecimalField(max_digits=100, decimal_places=2)
-    success = models.BooleanField(default=True)
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+	profile = models.ForeignKey(CustomerProfile, on_delete = models.CASCADE)
+	order = models.ForeignKey(Order, on_delete = models.CASCADE,default=0)
+	restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, default='')
+	orderStatus = models.CharField(max_length=10, default="Pending")
+	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+	collect_timestamp = models.DateTimeField(auto_now_add=False, auto_now=False, default=datetime.datetime.now)
+	owner = models.ForeignKey(OwnerProfile, on_delete = models.CASCADE, default = 0)
 
-    def __str__(self):
-        return self.order_id
+	def get_order_total(self):
+		sum = 0
+		for item in self.order.items.all():
+			sum = sum + (int(item.product.price) * int(item.quantity))
+		return sum
+	
+	def get_order_items(self):
+		return self.order.items.all()
 
-    class Meta:
-        ordering = ['-timestamp']
+	def get_restaurant_id(self):
+		return self.restaurant.pk
+
+	def get_order_id(self):
+		return self.order.ref_code
+
+	def get_Customer_id(self):
+		return self.profile.pk
+
+	class Meta:
+		ordering = ['-timestamp']	

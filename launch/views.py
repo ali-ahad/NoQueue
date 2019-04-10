@@ -7,13 +7,12 @@ from django.conf import settings
 from django.db.models import Q
 from django import forms
 from .forms import UserForm, CustomerProfile
-from .forms import OwnerProfileForm
 from .forms import CustomerProfileForm
 from .forms import UserUpdateForm
 from .forms import CustomerUpdateForm
 from .forms import OwnerUpdateForm
 from .models import Restaurant, Item 
-from .models import Order, OrderItem, Transaction
+from .models import Order, OrderItem, Transaction, OwnerProfile
 import random
 import string
 import datetime
@@ -464,7 +463,7 @@ def add_to_cart(request, **kwargs):
     print('Product is!')
     print(product.name)
     # create orderItem of the selected product
-    order_item, status = OrderItem.objects.get_or_create(product=product)
+    order_item, status = OrderItem.objects.get_or_create(product=product, is_ordered= False)
     print('Item is!')
     print(order_item)
     if status:
@@ -544,9 +543,65 @@ def search(request):
 
    return render(request, template,context)
 
+def insertTransaction(request, **kwargs):
+   user_profile = get_object_or_404(CustomerProfile, user=request.user)
+   orders = Order.objects.filter(owner=user_profile, is_ordered=False)
+   result = orders.all()
+   token = "1234"
+   new_ref = 0
+   for i, order in enumerate(result):
+      print(i)
+      order.is_ordered=True
+      OrderItems = order.items.all()
+      for item in OrderItems:
+         print("ORDER QUANTITY: "+str(item.quantity))
+         item.is_ordered = True
+         item.save()
+      new_ref = int(order.ref_code)
+      order.save()
+      
+      restaurant = order.items.first().product.restaurant
+      owner = restaurant.owner
+      print("Restaurant pk: "+str(restaurant.pk))
+      print("Restaurant name: "+str(restaurant.name))
+      timestamp = datetime.datetime.now()
+      print("Timestamp: " + str(timestamp))
+      print("Owner: " + str(owner.user.username))
+
+      trans = Transaction(profile = user_profile, order = order, restaurant = restaurant, timestamp = timestamp, owner =owner)
+      trans.save()
+      new_ref+=1
+      new_ref=str(new_ref)
+      order= Order(owner=user_profile, is_ordered=False, ref_code = new_ref)
+      order.save()
 
 
+
+   return render(request, 'launch/launch.html')
 
 
 
    
+def displayOrderHistoryCustomer(request, **kwargs):
+   user_profile = get_object_or_404(CustomerProfile, user=request.user)
+   transactions = Transaction.objects.filter(profile = user_profile).all()
+   
+   context ={
+      'Transactions': transactions
+   }
+
+def displayReceivedOrders(request, **kwargs):
+   owner_profile = get_object_or_404(OwnerProfile, user=request.user)
+
+   transactions = Transaction.objects.filter(owner = owner_profile).all()
+
+   context = {
+      'Transactions' : transactions
+   }
+
+   return context
+
+
+   
+
+
