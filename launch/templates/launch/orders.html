@@ -98,7 +98,7 @@
                         {% endfor %}
                       </td>
                           
-                      <td>$ {{transaction.order.get_cart_total}}</td>
+                      <td>$ {{transaction.price}}</td>
                       <td>{{transaction.timestamp.date}}</td>
                       <td>{{transaction.timestamp.time}}</td>
                       <td>{{transaction.collect_timestamp.date}}</td>

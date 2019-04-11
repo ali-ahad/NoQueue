@@ -58,6 +58,7 @@ urlpatterns = [
     path('order_summary/', views.order_details, name="order-summary"),
     path('order_summary/transcation/', views.insertTransaction, name='insertTrans'),
     path('order_summary/transcation/placeorder/',views.dateForm, name='dateForm'),
+    path('launch/', views.dateForm, name='purchase-success'),
 
     # Paths related to search bar and recommendation
     path('search-results/', views.search, name='searchbar'),
@@ -69,7 +70,6 @@ urlpatterns = [
     path('ownerorders/<int:pk>/update', views.updateStatusAccept, name='update-status'),
     path('ownerorders/<int:pk>/updateRej', views.updateStatusReject, name='update-status-reject'),
 
-    
 
 
 

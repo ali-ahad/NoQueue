@@ -551,8 +551,8 @@ def insertTransaction(request, **kwargs):
       timestamp = datetime.datetime.now()
       print("Timestamp: " + str(timestamp))
       print("Owner: " + str(owner.user.username))
-
-      trans = Transaction(profile = user_profile, order = order, restaurant = restaurant, timestamp = timestamp, owner =owner)
+      price = order.get_cart_total()
+      trans = Transaction(profile = user_profile, order = order, restaurant = restaurant, timestamp = timestamp, owner =owner, price = price)
       trans.save()
       new_ref+=1
       new_ref=str(new_ref)
@@ -656,7 +656,7 @@ def dateForm(request):
       transactions.save()
 
 
-      return render(request, 'launch/purchase_success.html')
+      return render( request,'launch/purchase_success.html')
         
    else:
       user_form = UserForm(prefix='UF')

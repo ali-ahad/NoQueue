@@ -71,11 +71,11 @@
                   <div>
                     </br>
                     <a href="{% url 'launch:owner-order' %}" class="genric-btn primary-border circle">My Orders</a>
-                    </div>
+                  </div>
                 </div> 
                 </div>
               </div>
-            </div>
+            
             {% for restaurant in myrestaurants %}
               <div class="row" id="Restaurant1">
                 {% if forloop.counter|modulo:2 == 1 %}
