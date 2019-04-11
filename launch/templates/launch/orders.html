@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <link href='https://fonts.googleapis.com/css?family=Alegreya Sans SC' rel='stylesheet'>
     <link rel="stylesheet" href="{% static "css/searchbar.css" %}">
+    <link rel="stylesheet" href="{% static "css/OrderStyles.css" %}">
     
   </head>
 
@@ -59,45 +60,56 @@
 
     {% if user.is_authenticated %}
         {% if user.is_owner %}
-        
-
-
-
-        {% else %}
-          <!-- Food Area starts -->
-        <section class="food-area section-padding">
+        <section class="section-padding">
             <h2 class="section-header">VIEW MY ORDERS</h2>
               <div class="container">
-                <h3 id="RName1"><span >1. Yardbird</span></h3>
+                {% for transaction in Transactions %}
                   <div class="table-responsive">          
                     <table class="table">
                         <thead>
                         <tr>
                           <th>#</th>
+                          <th>CUSTOMER ID</th>
+                          <th>RESTAURANT</th>
                           <th>ITEMS</th>
                           <th>TOTAL PRICE</th>
-                      <th>ORDER DATE</th>
+                          <th>ORDER DATE</th>
                           <th>ORDER TIME</th>
-                      <th>PREORDER DATE</th>
+                          <th>PREORDER DATE</th>
                           <th>PREORDER TIME</th>      
                           <th>STATUS</th>
+                          <th>ACCEPT/REJECT</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>1</td>
-                          <td>Apples, Oranges, Bananas</td>
-                          <td>$30</td>
-                      <td>7th April</td>
-                      <td>12:45</td>
-                      <td>7th April</td>
-                      <td>13:45</td>
+                          <td>{{ forloop.counter}}.</td>
+                          <td>{{transaction.profile.user.username}}</td>
+                          <td>{{transaction.restaurant.name}}</td>
+                          <td>
+                            {% for item in transaction.order.items.all %} 
+                                {{ item.product.name}} x {{item.quantity}},
+                            {% endfor %}
+                        </td>
+                          
+         
+                          <td>$ {{transaction.order.get_cart_total}}</td>
+                      <td>{{transaction.timestamp.date}}</td>
+                      <td>{{transaction.timestamp.time}}</td>
+                      <td>{{transaction.collect_timestamp.date}}</td>
+                      <td>{{transaction.collect_timestamp.time}}</td>
                       
-                          <td>Accepted</td>
-                        </tr>
+                        <td>{{transaction.orderStatus}}</td>
+                       
+                        <td>
+                        <a href="{% url 'launch:update-status' transaction.id %}" onclick="location.reload()"><button class="btn-danger" type="button">Accept</button></a> 
+                        <a href="{% url 'launch:update-status-reject' transaction.id %}" onclick="location.reload()"><button class="btn-danger" type="button">Reject</button></a> </td>
+                        
+                    </tr>
                       </tbody>
                     </table>
                     </div>
+                    {% endfor %}   
               <!--  <div class="cart-total">
                     <strong class="cart-total-title">Total</strong>
                     <span class="cart-total-price">$0</span>
@@ -107,25 +119,82 @@
         </a>
             </div>
         </section>
+    <!-- Food Area End -->
+
+
+
+        {% else %}
+          <!-- Food Area starts -->
+
+        <section class="section-padding">
+            <h2 class="section-header">VIEW MY ORDERS</h2>
+              <div class="container">
+                {% for transaction in Transactions %}
+                  <div class="table-responsive">          
+                    <table class="table">
+                        <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>RESTAURANT</th>
+                          <th>ITEMS</th>
+                          <th>TOTAL PRICE</th>
+                          <th>ORDER DATE</th>
+                          <th>ORDER TIME</th>
+                          <th>PREORDER DATE</th>
+                          <th>PREORDER TIME</th>      
+                          <th>STATUS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ forloop.counter}}.</td>
+                          <td>{{transaction.restaurant.name}}</td>
+                          <td>
+                            {% for item in transaction.order.items.all %} 
+                                {{ item.product.name}} x {{item.quantity}},
+                            {% endfor %}
+                        </td>
+                          
+         
+                          <td>$ {{transaction.order.get_cart_total}}</td>
+                      <td>{{transaction.timestamp.date}}</td>
+                      <td>{{transaction.timestamp.time}}</td>
+                      <td>{{transaction.collect_timestamp.date}}</td>
+                      <td>{{transaction.collect_timestamp.time}}</td>
+                      
+                        <td>{{transaction.orderStatus}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                    {% endfor %}   
+              <!--  <div class="cart-total">
+                    <strong class="cart-total-title">Total</strong>
+                    <span class="cart-total-price">$0</span>
+                </div>
+                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
+            </section>
+        </a>
+            </div>
+        </section>
+        
         <!-- Food Area End -->
         {% endif %}
 
     {% else %}
     {% endif %}
 
-    <!-- Footer Area Starts -->
-    <footer class="footer-area">
-       
-      <div class="footer-copyright">
-          <div class="container">
-              <div class="row">
-                  <div class="col-lg-7 col-md-6">
-                      <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> </a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
-                  </div>
-                  <div class="col-lg-5 col-md-6">
-                      <div class="social-icons">
+    <footer>
+            <div class="footer-copyright">
+              <div class="container">
+                  <div class="row">
+                    <div class="col-lg-7 col-md-6">
+                        <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made  by Group 3
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+                    </div>
+                    <div class="col-lg-5 col-md-6">
+                        <div class="social-icons">
                           <ul>
                               <li class="no-margin">Follow Us</li>
                               <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -134,22 +203,22 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> </a>
                               <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
                               <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                           </ul>
-                      </div>
+                        </div>
+                    </div>
                   </div>
               </div>
-          </div>
-      </div>
-  </footer>
-  <!-- Footer Area End -->
-
-
-  <!-- Javascript -->
-  <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
-<script src="assets/js/vendor/bootstrap-4.1.3.min.js"></script>
-  <script src="assets/js/vendor/wow.min.js"></script>
-  <script src="assets/js/vendor/owl-carousel.min.js"></script>
-  <script src="assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
-  <script src="assets/js/vendor/jquery.nice-select.min.js"></script>
-  <script src="assets/js/main.js"></script>
-</body>
-</html>
+            </div>
+        </footer>
+    
+        <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+        <script src="{% static 'js/vendor/bootstrap-4.1.3.min.js' %}"></script>
+        <script src="{% static 'js/vendor/wow.min.js' %}"></script>
+        <script src="{% static 'js/vendor/owl-carousel.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.datetimepicker.full.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/store.js' %}"></script>
+    
+      </body>
+    </html>
+    

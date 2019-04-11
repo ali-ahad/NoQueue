@@ -70,37 +70,39 @@
             
 	<h2 class="section-header">VIEW MY ORDERS</h2>
         <div class="container">
-		<h3 id="RName1"><span >1. Yardbird</span></h3>
+            {% for transactions in Transactions %}
+            
+            <h3 id="RName1"><span >1. Yardbird</span></h3>
           
-			<div class="table-responsive">          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>ITEMS</th>
-        <th>TOTAL PRICE</th>
-		<th>ORDER DATE</th>
-        <th>ORDER TIME</th>
-		<th>PREORDER DATE</th>
-        <th>PREORDER TIME</th>      
-        <th>STATUS</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Apples, Oranges, Bananas</td>
-        <td>$30</td>
-		<td>7th April</td>
-		<td>12:45</td>
-		<td>7th April</td>
-		<td>13:45</td>
-		
-        <td>Accepted</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
+                div class="table-responsive">          
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ITEMS</th>
+                    <th>TOTAL PRICE</th>
+                    <th>ORDER DATE</th>
+                    <th>ORDER TIME</th>
+                    <th>PREORDER DATE</th>
+                    <th>PREORDER TIME</th>      
+                    <th>STATUS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Apples, Oranges, Bananas</td>
+                    <td>$30</td>
+                    <td>7th April</td>
+                    <td>12:45</td>
+                    <td>7th April</td>
+                    <td>13:45</td>
+                    
+                    <td>Accepted</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
           <!--  <div class="cart-total">
                 <strong class="cart-total-title">Total</strong>
                 <span class="cart-total-price">$0</span>

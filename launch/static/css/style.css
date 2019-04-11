@@ -5887,11 +5887,10 @@ div.transbox {
   /* For IE8 and earlier */
 }
 
-=======>>>>>>>master .crop img {
+ .crop img {
   width: 362px;
   height: 300px;
   overflow: hidden;
-  <<<<<<< HEAD
 }
 
 .btn {
@@ -5908,11 +5907,4 @@ div.transbox {
   text-align: center;
   overflow: hidden;
   transition: .6s;
-}
-
-.btn:hover {
-  -webkit-transform: rotateY(360deg);
-  -ms-transform: rotateY(360deg);
-  transform: rotateY(360deg);
-  =======>>>>>>>master
 }

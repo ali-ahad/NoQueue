@@ -178,17 +178,18 @@ def add_to_cart(request, **kwargs):
       print('item handler!')
     if status:
       print('item handler status!')
+   
     
     # create order associated with the user
-    user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
+    user_order = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
 
     user_order.items.add(order_item)
+   
     
-    if status:
-        # generate a reference code
-      print('status retrived!')
     user_order.ref_code = generate_order_id()
     user_order.save()
+
+ 
 
     # show confirmation message and redirect back to the same page
     messages.info(request, "item added to cart")
@@ -363,31 +364,6 @@ def owner_profile_view(request):
          'profile_form': profile_form,
       })
 
-def dateForm(request):
-   date_forms = PreForm(request.POST)
-   if date_forms.is_valid():
-      Date = str(date_forms['year'].value())+"-"+str(date_forms['month'].value())+"-"+str(date_forms['day'].value())+" "+str(date_forms['hour'].value())+":"+str(date_forms['min'].value())+":"+"00"
-      print(Date)
-      Date = datetime.datetime.strptime(Date, '%Y-%m-%d %H:%M:%S')
-      print("Date time: ", Date)
-
-      user_profile = get_object_or_404(CustomerProfile, user=request.user)
-      transactions = Transaction.objects.filter(profile = user_profile, isTransacted=False).first()
-      transactions.collect_timestamp=Date
-      transactions.isTransacted =True
-      transactions.save()
-
-
-      return redirect('launch:purchase_success')
-        
-   else:
-      user_form = UserForm(prefix='UF')
-      profile_form = OwnerProfileForm(prefix='PF')
-
-   return render(request, 'launch/dateform.html',{
-   'date_form': date_forms,
-})
-     
   
 
 
@@ -488,41 +464,46 @@ def my_profile(request):
   return render(request, "launch/profile.html", context)
 
 def add_to_cart(request, **kwargs):
-    # get the user profile
-    user_profile = get_object_or_404(CustomerProfile, user=request.user)
-    # filter products by id
-    product = Item.objects.filter(id=kwargs['pk']).first()
-    print('Product is!')
-    print(product.name)
-    # create orderItem of the selected product
-    order_item, status = OrderItem.objects.get_or_create(product=product, is_ordered= False)
-    print('Item is!')
-    print(order_item)
-    if status:
+   # get the user profile
+   user_profile = get_object_or_404(CustomerProfile, user=request.user)
+   # filter products by id
+   product = Item.objects.filter(id=kwargs['pk']).first()
+   print('Product is!')
+   print(product.name)
+   # create orderItem of the selected product
+   order_item, status = OrderItem.objects.get_or_create(product=product, is_ordered= False)
+   print('Item is!')
+   print(order_item)
+   if status:
       print('First status!')
 
-    # create order associated with the user
+   # create order associated with the user
 
-    user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
-    
-    # check if the user already owns this product
-    if order_item in user_order.items.all():
-        order_item.quantity = order_item.quantity + 1
-        order_item.save()
-        print('alreayd own!')
-        print(user_order.items.get(pk=order_item.pk).quantity)
-        messages.info(request, 'You already own this ebook')
-        return redirect(reverse('launch:restaurant-menu', kwargs = {'pk': product.restaurant.pk }))
-    
-    user_order.items.add(order_item)
-    if status:
-        # generate a reference code
-        user_order.ref_code = 1
-        user_order.save()
+   user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
+   
+   # check if the user already owns this product
+   if order_item in user_order.items.all():
+      order_item.quantity = order_item.quantity + 1
+      order_item.save()
+      print('alreayd own!')
+      print(user_order.items.get(pk=order_item.pk).quantity)
+      messages.info(request, 'You already own this ebook')
+      return redirect(reverse('launch:restaurant-menu', kwargs = {'pk': product.restaurant.pk }))
 
-    # show confirmation message and redirect back to the same page
-    messages.info(request, "item added to cart")
-    return redirect(reverse('launch:restaurant-menu', kwargs={'pk':product.restaurant.pk})) 
+   user_order.items.add(order_item)
+   #user_order.items=order_item
+   if status:
+      # generate a reference code
+      user_order.ref_code = 1
+      user_order.save()
+
+   print("-----------ORDER CHECK-----------")
+   print("USER ORDER ITEMS: " + str(user_order.items.all()))
+   print("-----------ORDER CHECK END-----------")
+
+   # show confirmation message and redirect back to the same page
+   messages.info(request, "item added to cart")
+   return redirect(reverse('launch:restaurant-menu', kwargs={'pk':product.restaurant.pk})) 
 
 
 def get_user_pending_order(request):
@@ -582,6 +563,8 @@ def insertTransaction(request, **kwargs):
    token = "1234"
    new_ref = 0
 
+   print("LOLz")
+
    for i, order in enumerate(result):
       print(i)
       order.is_ordered=True
@@ -608,9 +591,17 @@ def insertTransaction(request, **kwargs):
       order= Order(owner=user_profile, is_ordered=False, ref_code = new_ref)
       order.save()
 
+      print("-----------------CHECK--------------------")
+      print("Restaurant name: "+str(trans.restaurant.name))
+      print("Order: "+str(trans.order.items))
+      print("-----------------CHECK END--------------------")
 
 
-   return render(request, 'launch/dateform.html')
+
+
+   #return render(request, 'launch/dateform.html')
+
+      return redirect('launch:dateForm')
 
 
 
@@ -618,6 +609,17 @@ def insertTransaction(request, **kwargs):
 def displayOrderHistoryCustomer(request, **kwargs):
    user_profile = get_object_or_404(CustomerProfile, user=request.user)
    transactions = Transaction.objects.filter(profile = user_profile).all()
+   orders = list()
+
+
+   for transaction in transactions:
+      orders.append(transaction.order.items)
+
+   for order in orders:
+      print(order)
+
+
+
    if request.user.is_authenticated:
       context ={
          'Transactions': transactions
@@ -634,6 +636,8 @@ def displayReceivedOrders(request, **kwargs):
       context = {
          'Transactions' : transactions
       }
+
+      print("------------REACHED------------")
 
    return render(request, 'launch/orders.html', context)
 
@@ -677,3 +681,45 @@ def recommendation(request, **kwargs):
 
 
 
+
+def dateForm(request):
+   date_forms = PreForm(request.POST)
+   if date_forms.is_valid():
+      Date = str(date_forms['year'].value())+"-"+str(date_forms['month'].value())+"-"+str(date_forms['day'].value())+" "+str(date_forms['hour'].value())+":"+str(date_forms['min'].value())+":"+"00"
+      print(Date)
+      Date = datetime.datetime.strptime(Date, '%Y-%m-%d %H:%M:%S')
+      print("Date time: ", Date)
+
+      user_profile = get_object_or_404(CustomerProfile, user=request.user)
+      transactions = Transaction.objects.filter(profile = user_profile, isTransacted=False).first()
+      transactions.collect_timestamp=Date
+      transactions.isTransacted =True
+      transactions.save()
+
+
+      return render(request, 'launch/purchase_success.html')
+        
+   else:
+      user_form = UserForm(prefix='UF')
+      profile_form = OwnerProfileForm(prefix='PF')
+
+      return render(request, 'launch/dateform.html',{
+      'date_form': date_forms,})
+   
+def updateStatusAccept(request, **kwargs):
+   transactions = Transaction.objects.get(pk=kwargs['pk'])
+
+   print("Transaction: ", transactions)
+   transactions.orderStatus = 'Accepted'
+   transactions.save()
+
+   return redirect("launch:owner-order")
+
+def updateStatusReject(request, **kwargs):
+   transactions = Transaction.objects.get(pk=kwargs['pk'])
+
+   print("Transaction: rejection", transactions)
+   transactions.orderStatus = 'Rejected'
+   transactions.save()
+
+   return redirect("launch:owner-order")

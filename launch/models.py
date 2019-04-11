@@ -140,6 +140,15 @@ class Transaction(models.Model):
 	def get_Customer_id(self):
 		return self.profile.pk
 
+	def accept(self):
+		print("lmao")
+		self.orderStatus = 'Accepted'
+		self.save()
+
+	def reject(self):
+		print("lolerz")
+		self.orderStatus = 'Rejected'
+		self.save()
 	class Meta:
 		ordering = ['-timestamp']	
 

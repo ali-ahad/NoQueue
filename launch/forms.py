@@ -10,7 +10,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.forms.widgets import PasswordInput, TextInput, DateInput
 from django.forms import ModelForm
 from django.contrib.admin import widgets 
-from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
 
 User = get_user_model()
 CHOICES = ['Restaurant Owner', 'Customer']
@@ -69,49 +68,6 @@ class OwnerUpdateForm(forms.ModelForm):
 	class Meta:
 		model = OwnerProfile
 		fields = ['image']
-
-"""class DateTimePicker(forms.Form):
-
-	datetime = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M:%S'], widget=forms.DateTimeInput(format='%d/%m/%Y %H:%M:%S'))
-	def clean(self):
-		cleaned_data = self.cleaned_data
-		return cleaned_data"""
-
-"""class DateForm(forms.Form):
-    date = forms.DateTimeField(
-        input_formats=['%d/%m/%Y %H:%M'],
-        widget=forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        })
-    )"""
-
-"""class ProjectForm(ModelForm):
-	startdate = forms.DateField()
-	starthour = forms.ChoiceField(choices=((6,"6am"),(7,"7am"),(8,"8am"),(9,"9am")))
-	startminute = forms.ChoiceField(choices=((0,":00"),(15,":15"),(30,":30"),(45,":45")))
-
-	class Meta:
-		model = ProjectForm
-	
-	def __init__(self, *args, **kwargs):
-		super(ProjectForm, self).__init__(*args, **kwargs)
-		self.fields['startdate'].widget = widgets.AdminDateWidget()
-		self.fields['starthour'].widget = widgets.AdminTimeWidget()
-		self.fields['startminute'].widget = widgets.AdminSplitDateTime()
-
-	def clean(self):
-		starttime = time(int(self.cleaned_data.get('starthour')), 
-								int(self.cleaned_data.get('startminute')))
-		return self.cleaned_data"""
-
-"""class DateTime(forms.ModelForm):
-	class Meta:
-		#model = yourModel
-		widgets = {
-			#Use localization and bootstrap 3
-			'datetime': DateTimeWidget(attrs={'id':"yourdatetimeid"}, usel10n = True, bootstrap_version=3)
-		}"""
 
 
         
