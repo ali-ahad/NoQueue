@@ -51,7 +51,6 @@
                       <ul>
                           <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
                           <li><a href={% url 'launch:launch-about' %}>About</a></li>
-                          <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
                           {% if user.is_authenticated %}
                             <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
                           {% endif %}

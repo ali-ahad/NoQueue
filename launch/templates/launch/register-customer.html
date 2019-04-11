@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title %}
+
    <title>Register Customer</title>
 {% endblock %}
 
@@ -11,7 +12,7 @@
          <div class="row">
             <div class="col-lg-2">
                <div class="logo-area">
-                  <a href="{% url 'launch:launch-home' %}"img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                  <a href="{% url 'launch:launch-home' %}"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
                </div>
             </div>
             <div class="col-lg-10">
@@ -24,7 +25,6 @@
                   <ul>
                      <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
                      <li><a href={% url 'launch:launch-about' %}>About</a></li>
-                     <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
                   </ul>
                </div>
             </div>
@@ -45,10 +45,11 @@
             <div class="container">
                <h1 style="color:Black;">Sign-Up</h1>
                <p>Please fill in this form to create an account.</p>
-               <br> 
+               <br>
                {% if form.errors %}
                   {{ form.errors }}
                {% endif %}
+
                <hr>
 
                <label for="First Name"><b>First name</b></label>
@@ -115,3 +116,5 @@
       </div>
    </footer>
 {% endblock %}
+
+
