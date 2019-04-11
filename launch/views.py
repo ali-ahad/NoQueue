@@ -259,38 +259,6 @@ def update_transaction_records(request, token):
     messages.info(request, "Thank you! Your purchase was successful!")
     return redirect(reverse('launch:launch-home'))
 
-def checkout(request, **kwargs):
-   existing_order = get_user_pending_order(request)
-   publishKey = settings.STRIPE_PUBLISHABLE_KEY
-   if request.method == 'POST':
-         try:
-            token = request.POST['stripeToken']
-
-            charge = stripe.Charge.create(
-               amount=100*existing_order.get_cart_total(),
-               currency='usd',
-               description='Example charge',
-               source=token,
-            )
-
-            return redirect(reverse('launch:update_records', 
-                     kwargs={
-                        'token': token
-                     }))
-         except stripe.error.CardError as e:
-            messages.info(request, e)
-
-   context = {
-      'order': existing_order,
-      'STRIPE_PUBLISHABLE_KEY': publishKey
-   }
-
-   return render(request, 'launch/checkout.html', context)
-
-
-def success(request, **kwargs):
-    # a view signifying the transcation was successful
-    return render(request, 'launch/purchase_success.html')
 
 def home(request):
 
@@ -610,7 +578,7 @@ def insertTransaction(request, **kwargs):
 
 
 
-   return render(request, 'launch/dateform.html')
+   return render(request, 'launch/purchase_success.html')
 
 
 
