@@ -65,21 +65,11 @@
         <strong class="cart-total-title">Total</strong>
         {% if order.get_cart_items %}
           <span class="cart-total-price">${{ order.get_cart_total }}</span>
-          <a href="{% url 'launch:dateForm' %}" class="template-btn template-btn2 mt-4">Place Order</a>
         {% endif %}
     </div>
         <!--<button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
   </section>
-  <section>
 
-        <form class="modal-content" method="post" enctype="multipart/form-data" >
-          {% csrf_token %}
-          <label for="Date"><b>Date</b></label>
-          {{ date_form.Date }}
-          <br/>
-          <input id="submit" type="submit" value="Submit" class="btn">
-        </form>
-  </section>
 
   <section class="table-area section-padding">
     <div class="container">
@@ -95,22 +85,9 @@
         <div class="col-lg-8 offset-lg-2">
 
 
-            <!--
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-              </div>
-            </div>
-            <div class="input-group mb-3" align="right">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
-              </div>
-              <input type="text" id="datepicker2" value="{{ collect_timestamp.datetime.time }}">
-            </div>
-            -->  
             <div class="table-btn text-center">
               {% if order.get_cart_items %}
-                <a href="{% url 'launch:insertTrans' %}" class="template-btn template-btn2 mt-4"><button class="btn btn-danger" type="submit" style="float:right">Place Order</button></a>
+                <a href="{% url 'launch:insertTrans' %}" ><button class="btn-danger" type="submit" style="float:right">Pre-Order</button></a>
               {% endif %}
             </div>
         

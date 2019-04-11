@@ -57,10 +57,9 @@ urlpatterns = [
     path('restaurant/<int:rk>/menu/<int:pk>/addtocart/', views.add_to_cart, name='add-to-cart'),   
     path('order-summary/', views.order_details, name="order-summary"),
     path('item/<int:pk>/deletefromcart', views.delete_from_cart, name='delete-item'),
-    path('/order_summary/', views.order_details, name="order-summary"),
+    path('order_summary/', views.order_details, name="order-summary"),
 
     path('update-transactions/', views.update_transaction_records, name='update_records'),
-    path('order-summary/checkout/', views.checkout, name='checkout'),
     path('checkout/success/', views.insertTransaction, name='insertTrans'),
     path('search-results/', views.search, name='searchbar'),
     path('recommendation/', views.recommendation, name='recommendation'),
