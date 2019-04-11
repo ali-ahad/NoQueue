@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'launch.apps.LaunchConfig',
-    'owner.apps.OwnerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,7 +50,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 ROOT_URLCONF = 'pickngo.urls'
 
@@ -137,20 +135,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 AUTH_USER_MODEL = 'launch.User'
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'launch:launch-home'
 
-# Stripe and Braintree Settings
-
-if DEBUG:
-    # test keys
-    STRIPE_PUBLISHABLE_KEY = 'pk_test_h6SLoPtpFgyxMPftRdxwbFJr0074lvycRM'
-    STRIPE_SECRET_KEY = 'sk_test_1V1ywn2N9NTorqiaqiSsZaKv002Gg7kOvr'
-    BT_ENVIRONMENT='sandbox'
-    BT_MERCHANT_ID='dfsdfdfa'
-    BT_PUBLIC_KEY='dfsfafasd'
-    BT_PRIVATE_KEY='dfsdfasdaw'
-else:
-    # live keys
-    STRIPE_PUBLISHABLE_KEY = ''
-    STRIPE_SECRET_KEY = ''

@@ -16,11 +16,9 @@ from .models import Order, OrderItem, Transaction, OwnerProfile
 import random
 import string
 import datetime
-import stripe
 from datetime import date
-import random
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 class RestaurantDetailView(DetailView):
    model = Restaurant
