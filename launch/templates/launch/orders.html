@@ -1,5 +1,7 @@
+
 {% load custom_tags %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -61,130 +63,65 @@
     </header>
 
     {% if user.is_authenticated %}
-        {% if user.is_owner %}
-        <section class="section-padding">
-            <h2 class="section-header">VIEW MY ORDERS</h2>
-              <div class="container">
-                {% for transaction in Transactions %}
-                  <div class="table-responsive">          
-                    <table class="table">
-                        <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>CUSTOMER ID</th>
-                          <th>RESTAURANT</th>
-                          <th>ITEMS</th>
-                          <th>TOTAL PRICE</th>
-                          <th>ORDER DATE</th>
-                          <th>ORDER TIME</th>
-                          <th>PREORDER DATE</th>
-                          <th>PREORDER TIME</th>      
-                          <th>STATUS</th>
-                          <th>ACCEPT/REJECT</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{{ forloop.counter}}.</td>
-                          <td>{{transaction.profile.user.username}}</td>
-                          <td>{{transaction.restaurant.name}}</td>
-                          <td>
-                            {% for item in transaction.order.items.all %} 
-                                {{ item.product.name}} x {{item.quantity}},
-                            {% endfor %}
-                        </td>
-                          
-         
-                          <td>$ {{transaction.order.get_cart_total}}</td>
-                      <td>{{transaction.timestamp.date}}</td>
-                      <td>{{transaction.timestamp.time}}</td>
-                      <td>{{transaction.collect_timestamp.date}}</td>
-                      <td>{{transaction.collect_timestamp.time}}</td>
-                      
-                        <td>{{transaction.orderStatus}}</td>
-                       
-                        <td>
-                        <a href="{% url 'launch:update-status' transaction.id %}" onclick="location.reload()"><button class="btn-danger" type="button">Accept</button></a> 
-                        <a href="{% url 'launch:update-status-reject' transaction.id %}" onclick="location.reload()"><button class="btn-danger" type="button">Reject</button></a> </td>
-                        
+      <section class="section-padding">
+        <h2 class="section-header">VIEW MY ORDERS</h2>
+          <div class="container">
+            {% for transaction in Transactions %}
+              <div class="table-responsive">          
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      {% if user.is_owner %}
+                        <th>CUSTOMER ID</th>
+                      {% endif %}
+                      <th>RESTAURANT</th>
+                      <th>ITEMS</th>
+                      <th>TOTAL PRICE</th>
+                      <th>ORDER DATE</th>
+                      <th>ORDER TIME</th>
+                      <th>PREORDER DATE</th>
+                      <th>PREORDER TIME</th>      
+                      <th>STATUS</th>
+                      {% if user.is_owner %}
+                        <th>ACCEPT/REJECT</th>
+                      {% endif %}
                     </tr>
-                      </tbody>
-                    </table>
-                    </div>
-                    {% endfor %}   
-              <!--  <div class="cart-total">
-                    <strong class="cart-total-title">Total</strong>
-                    <span class="cart-total-price">$0</span>
-                </div>
-                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
-            </section>
-        </a>
-            </div>
-        </section>
-    <!-- Food Area End -->
-
-
-
-        {% else %}
-          <!-- Food Area starts -->
-
-        <section class="section-padding">
-            <h2 class="section-header">VIEW MY ORDERS</h2>
-              <div class="container">
-                {% for transaction in Transactions %}
-                  <div class="table-responsive">          
-                    <table class="table">
-                        <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>RESTAURANT</th>
-                          <th>ITEMS</th>
-                          <th>TOTAL PRICE</th>
-                          <th>ORDER DATE</th>
-                          <th>ORDER TIME</th>
-                          <th>PREORDER DATE</th>
-                          <th>PREORDER TIME</th>      
-                          <th>STATUS</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{{ forloop.counter}}.</td>
-                          <td>{{transaction.restaurant.name}}</td>
-                          <td>
-                            {% for item in transaction.order.items.all %} 
-                                {{ item.product.name}} x {{item.quantity}},
-                            {% endfor %}
-                        </td>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ forloop.counter}}.</td>
+                      <td>{{transaction.profile.user.username}}</td>
+                      <td>{{transaction.restaurant.name}}</td>
+                      <td>
+                        {% for item in transaction.order.items.all %} 
+                            {{ item.product.name}} x {{item.quantity}},
+                        {% endfor %}
+                      </td>
                           
-         
-                          <td>$ {{transaction.order.get_cart_total}}</td>
+                      <td>$ {{transaction.order.get_cart_total}}</td>
                       <td>{{transaction.timestamp.date}}</td>
                       <td>{{transaction.timestamp.time}}</td>
                       <td>{{transaction.collect_timestamp.date}}</td>
                       <td>{{transaction.collect_timestamp.time}}</td>
-                      
-                        <td>{{transaction.orderStatus}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    </div>
-                    {% endfor %}   
-              <!--  <div class="cart-total">
-                    <strong class="cart-total-title">Total</strong>
-                    <span class="cart-total-price">$0</span>
-                </div>
-                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->
-            </section>
-        </a>
-            </div>
-        </section>
-        
-        <!-- Food Area End -->
-        {% endif %}
-
+                      <td>{{transaction.orderStatus}}</td>
+                      {% if user.is_owner%}
+                        <td>
+                          <a href="{% url 'launch:update-status' transaction.id %}" onclick="location.reload()"><button class="btn-danger" type="button">Accept</button></a> 
+                          <a href="{% url 'launch:update-status-reject' transaction.id %}" onclick="location.reload()"><button class="btn-danger" type="button">Reject</button></a> 
+                        </td>  
+                      {% endif %} 
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            {% endfor %}   
+          </section>
+        </div>
+      </section>
+    <!-- Food Area End -->
     {% else %}
-    {% endif %}
+      {% endif %}
 
     <footer>
             <div class="footer-copyright">
