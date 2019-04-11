@@ -618,21 +618,24 @@ def insertTransaction(request, **kwargs):
 def displayOrderHistoryCustomer(request, **kwargs):
    user_profile = get_object_or_404(CustomerProfile, user=request.user)
    transactions = Transaction.objects.filter(profile = user_profile).all()
-   
-   context ={
-      'Transactions': transactions
-   }
+   if request.user.is_authenticated:
+      context ={
+         'Transactions': transactions
+      }
+
+   return render(request, 'launch/orders.html', context)
+
 
 def displayReceivedOrders(request, **kwargs):
    owner_profile = get_object_or_404(OwnerProfile, user=request.user)
 
    transactions = Transaction.objects.filter(owner = owner_profile).all()
+   if request.user.is_authenticated:
+      context = {
+         'Transactions' : transactions
+      }
 
-   context = {
-      'Transactions' : transactions
-   }
-
-   return context
+   return render(request, 'launch/orders.html', context)
 
 def recommendation(request, **kwargs):
 

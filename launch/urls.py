@@ -66,7 +66,8 @@ urlpatterns = [
     #path('test/', views.insertTransaction, name='Trans')
     path('recommendation/', views.recommendation, name='recommendation'),
     path('test/',views.dateForm, name='dateForm')
-
+    path('customerorders/', views.displayOrderHistoryCustomer, name='customer-order')
+    path('ownerorders/', views.displayReceivedOrders, name='owner-order')
     
 
 
