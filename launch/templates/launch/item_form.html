@@ -1,8 +1,8 @@
 {% extends 'launch/base.html' %}
 {% load static %}
+
 {% block title %}
-{% load crispy_forms_tags %}
-   <title>Restaurant Register</title>
+   <title>Add/Update Item</title>
 {% endblock %}
 
 {% block header %}
@@ -11,7 +11,7 @@
          <div class="row">
             <div class="col-lg-2">
                <div class="logo-area">
-                  <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                  <a href={% url 'launch:launch-home' %}><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
                </div>
             </div>
             <div class="col-lg-10">

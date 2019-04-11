@@ -548,7 +548,7 @@ def insertTransaction(request, **kwargs):
       owner = restaurant.owner
       print("Restaurant pk: "+str(restaurant.pk))
       print("Restaurant name: "+str(restaurant.name))
-      timestamp = datetime.datetime.now(tim)
+      timestamp = datetime.datetime.now()
       print("Timestamp: " + str(timestamp))
       print("Owner: " + str(owner.user.username))
 
@@ -565,15 +565,9 @@ def insertTransaction(request, **kwargs):
       print("-----------------CHECK END--------------------")
 
 
-
-
-   #return render(request, 'launch/dateform.html')
-
       return redirect('launch:dateForm')
 
 
-
-   
 def displayOrderHistoryCustomer(request, **kwargs):
    user_profile = get_object_or_404(CustomerProfile, user=request.user)
    transactions = Transaction.objects.filter(profile = user_profile).all()
@@ -645,9 +639,6 @@ def recommendation(request, **kwargs):
       print("Context: ", context )
 
    return render(request, 'launch/recommendationPage.html', context)
-
-
-
 
 
 def dateForm(request):

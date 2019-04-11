@@ -57,8 +57,9 @@
                         <ul>
                             <li class="active"><a href={% url 'launch:launch-home' %}>home</a></li>
                             <li><a href={% url 'launch:launch-about' %}>about</a></li>
+                            <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
                             {% if user.is_authenticated %}
-                            <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
+                                <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -132,7 +133,6 @@
                                     <br>
                                     <h5  style= "color: white">Ali Ahad</h5>
                                     <span style= "color: white"><i>Backend Developer</i></span>
-                                    <p  style= "color: white"class="pt-3">Mai crispy forms dekhke hilata hu</p>
                                 </div>
                             </div>
                             <div class="single-slide d-sm-flex">

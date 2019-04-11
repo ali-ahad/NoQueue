@@ -11,11 +11,9 @@ urlpatterns = [
     # Initial page when app launches
     path('', views.home, name='launch-home'),
 
-    #Navbar limks
+    #Navbar links
     path('about/', views.about, name='launch-about'), 
     path('contact/', views.contact, name='launch-contact'),
-    path('blog-home/', views.blog_home, name='launch-bloghome'),
-    path('blog-details/', views.blog_details, name='launch-blogdetails'), 
 
     # Page that loads when the user registers
     path('register/', views.register, name='register'),
@@ -38,32 +36,34 @@ urlpatterns = [
     #shows detail of restuarant using class based views
     path('restaurant/<int:pk>/', RestaurantDetailView.as_view(), name='restaurant-detail'), 
 
-    #creates restuarant using class based views
+    #Paths related to creating and updating restaurant
     path('restaurant/new/', RestaurantCreateView.as_view(), name='restaurant-create'),
-
     path('restaurant/<int:pk>/update/', RestaurantUpdateView.as_view(), name='restaurant-update'),
     path('restaurant/<int:pk>/delete/', RestaurantDeleteView.as_view(), name='restaurant-delete'),
-
     path('restaurant/<int:pk>/menu/', MenuDetailView.as_view(), name='restaurant-menu'),
 
-
+    # Paths related to creating and updating item
     path('restaurant/<int:pk>/menu/add', ItemCreateView.as_view(), name='item-create'),
     path('restaurant/<int:rk>/menu/<int:pk>', ItemDetailView.as_view(), name='item-detail'), 
     path('restaurant/<int:rk>/menu/<int:pk>/update/', ItemUpdateView.as_view(), name='item-update'),
     path('restaurant/<int:rk>/menu/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
     path('profile/', views.my_profile, name='my_profile'),
     
- 
+    # Cart related paths
     path('restaurant/<int:rk>/menu/<int:pk>/addtocart/', views.add_to_cart, name='add-to-cart'),   
     path('order-summary/', views.order_details, name="order-summary"),
     path('item/<int:pk>/deletefromcart', views.delete_from_cart, name='delete-item'),
-    path('order_summary/', views.order_details, name="order-summary"),
 
-    path('update-transactions/', views.update_transaction_records, name='update_records'),
-    path('checkout/success/', views.insertTransaction, name='insertTrans'),
+    # Paths related to transaction
+    path('order_summary/', views.order_details, name="order-summary"),
+    path('order_summary/transcation/', views.insertTransaction, name='insertTrans'),
+    path('order_summary/transcation/placeorder/',views.dateForm, name='dateForm'),
+
+    # Paths related to search bar and recommendation
     path('search-results/', views.search, name='searchbar'),
     path('recommendation/', views.recommendation, name='recommendation'),
-    path('launch/',views.dateForm, name='dateForm'),
+
+    # Paths related to view transacted orders
     path('customerorders/', views.displayOrderHistoryCustomer, name='customer-order'),
     path('ownerorders/', views.displayReceivedOrders, name='owner-order'),
     path('ownerorders/<int:pk>/update', views.updateStatusAccept, name='update-status'),

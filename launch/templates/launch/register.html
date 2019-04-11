@@ -4,6 +4,7 @@
 {% block title %}
     <title>No Queue</title>
 {% endblock  %}
+
     <!-- Header Area Starts -->
 {% block header %}
   <header class="header-area">
@@ -11,7 +12,7 @@
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo-area">
-                        <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                        <a href="{% url 'launch:launch-home' %}"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
                     </div>
                 </div>
                 <div class="col-lg-10">
