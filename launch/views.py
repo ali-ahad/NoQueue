@@ -548,7 +548,7 @@ def insertTransaction(request, **kwargs):
       owner = restaurant.owner
       print("Restaurant pk: "+str(restaurant.pk))
       print("Restaurant name: "+str(restaurant.name))
-      timestamp = datetime.datetime.now()
+      timestamp = datetime.datetime.now(tim)
       print("Timestamp: " + str(timestamp))
       print("Owner: " + str(owner.user.username))
 
