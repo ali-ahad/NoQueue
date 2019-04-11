@@ -1,6 +1,90 @@
 {% extends 'launch/base.html' %}
+{% load static %}
+
+{% block title %}
+   <title>Place Order</title>
+{% endblock %}
 
 {% block content %}
+   <header class="header-area">
+      <div class="container">
+         <div class="row">
+               <div class="col-lg-2">
+                  <div class="logo-area">
+                     <a href="{% url 'launch:launch-home' %}"><img src="{% static 'images/logo/logo.png' %}" alt="logo"></a>
+                  </div>
+               </div>
+               <div class="col-lg-10">
+                  <div class="custom-navbar">
+                     <span></span>
+                     <span></span>
+                     <span></span>
+                  </div>  
+                  <div class="main-menu">
+                     <ul>
+                           <li class="active"><a href={% url 'launch:launch-home' %}>Home</a></li>
+                           <li><a href={% url 'launch:launch-about' %}>About</a></li>
+                           <li><a href={% url 'launch:launch-contact' %}>contact</a></li>
+                           {% if user.is_authenticated %}
+                           <li><a href={% url 'launch:logout' %} action="{% url 'launch:logout' %}">Logout</a></li>
+                           {% endif %}
+                     </ul>
+                  </div>
+               </div>
+         </div>
+      </div>
+   </header>
+
+   <section class="banner-area text-center">
+      <div class="container">
+		   <div class="background">
+			   <div class="layer"></div>
+			</div>
+
+         <form class="modal-content" method="POST" enctype="multipart/form-data">
+            
+            <div class="container">
+               <h1 style="color:Black;">Pre-order Time</h1>
+               <p>Enter Order time</p>
+               <hr>
+               {% csrf_token %}
+               <!--
+               {% if form.errors %}
+                  <p>Please Complete the required fields</p>
+               {% endif %}
+
+               <label for="year"><b>Year</b></label>
+               {{ date_form.year }}
+
+               <label for="month"><b>Month</b></label>
+               {{ date_form.month }}
+
+               <label for="day"><b>Day</b></label>
+               {{ date_form.day }}
+
+               <label for="hour"><b>Hour</b></label>
+               {{ date_form.month }}
+
+               <label for="minute"><b>Minute</b></label>
+               {{ date_form.min }}
+               -->
+
+               {{date_form.as_p}}
+               
+
+               <div class="clearfix">
+                  <a href={% url 'launch:order-summary' %}><button type="button" class="cancelbtn">Cancel</button></a>
+                  <button type="submit" class="signupbtn">Checkout</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </section>
+{% endblock %}
+
+
+
+<!--
    <form action="" class="modal-content" method="POST" enctype="multipart/form-data" >
    {% csrf_token %}
    <label for="Year"><b>Year</b></label>
@@ -11,4 +95,4 @@
    <button  type="submit" value="Submit" class="btn">
    </form>
             
-{% endblock %}
+-->

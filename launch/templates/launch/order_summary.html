@@ -65,6 +65,7 @@
         <strong class="cart-total-title">Total</strong>
         {% if order.get_cart_items %}
           <span class="cart-total-price">${{ order.get_cart_total }}</span>
+          <a href="{% url 'launch:dateForm' %}" class="template-btn template-btn2 mt-4">Place Order</a>
         {% endif %}
     </div>
         <!--<button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>-->

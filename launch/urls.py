@@ -63,7 +63,6 @@ urlpatterns = [
     path('order-summary/checkout/', views.checkout, name='checkout'),
     path('checkout/success/', views.insertTransaction, name='insertTrans'),
     path('search-results/', views.search, name='searchbar'),
-    #path('test/', views.insertTransaction, name='Trans')
     path('recommendation/', views.recommendation, name='recommendation'),
     path('launch/',views.dateForm, name='dateForm'),
     path('customerorders/', views.displayOrderHistoryCustomer, name='customer-order'),
